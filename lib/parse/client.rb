@@ -5,7 +5,7 @@ module Parse
     API_VERSION = 1
     @@default_client = nil
 
-    attr_accessor :http_client
+    attr_accessor :http_client, :session_token
 
     def self.default_client
       @@default_client ||= new
@@ -30,7 +30,12 @@ ex. Parse.credentials application_id: APPLICATION_ID, api_key: API_KEY
         'X-Parse-REST-API-Key' => @api_key,
         'Content-Type' => 'application/json'
       }.update opt_headers
+      body = body.to_json unless body.is_a? String
       @http_client.request method, endpoint, headers, body, &block
+    end
+
+    def sign_up username, password, opts={}, &block
+      call_api :post, 'users', {'username' => username, 'password' => password}.update(opts || {}), &block
     end
 
     def find parse_class, object_id_or_conditions, opts={}

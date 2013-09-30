@@ -8,7 +8,7 @@ class ClassA < Parse::Object; end
 # or
 #   Parse::Object.create :ClassA
 
-describe Parse, 'when it defines a parse class' do
+describe Parse::Object, 'when it defines a parse class' do
   it 'should return a new class' do
     Parse::Object(:ClassB).should be_a_kind_of(Class)
     ClassB.should be < Parse::Object
@@ -31,7 +31,7 @@ describe Parse, 'when it defines a parse class' do
   end
 end
 
-describe Parse, 'when it creates a new parse object' do
+describe Parse::Object, 'when it creates a new parse object' do
   it 'should create a parse object' do
     class_a = ClassA.new
     class_a.columnA = 'Hello, parse.com'

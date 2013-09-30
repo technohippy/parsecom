@@ -12,6 +12,7 @@ require 'parse/http_client'
 require 'parse/client'
 require 'parse/query'
 require 'parse/object'
+require 'parse/user'
 require 'parse/pointer'
 require 'parse/file'
 
