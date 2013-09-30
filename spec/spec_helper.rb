@@ -11,4 +11,4 @@ end
 require 'parsecom'
 # setup Parse object
 Parse.credentials application_id: ENV['APPLICATION_ID'], api_key: ENV['API_KEY']
-# puts('set your credentials in spec/spec_helper.rb and remove this line') || exit
+puts('set your credentials in spec/spec_helper.rb and remove this line') || exit
