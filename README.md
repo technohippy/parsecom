@@ -125,3 +125,15 @@ Parse::Client.default_client.update score, :score => 73453
 ### Deleting Objects
 
 TBD
+
+### Sign up
+
+```ruby
+user = Parse::User.sign_up 'YOUR USERNAME', 'YOUR PASSWORD'
+```
+
+### Log in
+
+```ruby
+user = Parse::User.log_in 'YOUR USERNAME', 'YOUR PASSWORD'
+```

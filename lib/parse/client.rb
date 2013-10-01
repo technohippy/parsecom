@@ -29,7 +29,9 @@ ex. Parse.credentials application_id: APPLICATION_ID, api_key: API_KEY
         'X-Parse-Application-Id' => @application_id,
         'X-Parse-REST-API-Key' => @api_key,
         'Content-Type' => 'application/json'
-      }.update opt_headers
+      }
+      headers.update('X-Parse-Session-Token' => @session_token) if @session_token
+      headers.update opt_headers
       if body.is_a?(Hash)
         body = Hash[*(body.to_a.map{|k, v| [k, URI.encode(v)]}.flatten)].to_json 
       end
