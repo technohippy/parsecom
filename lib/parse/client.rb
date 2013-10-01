@@ -30,12 +30,20 @@ ex. Parse.credentials application_id: APPLICATION_ID, api_key: API_KEY
         'X-Parse-REST-API-Key' => @api_key,
         'Content-Type' => 'application/json'
       }.update opt_headers
-      body = body.to_json unless body.is_a? String
+      if body.is_a?(Hash)
+        body = Hash[*(body.to_a.map{|k, v| [k, URI.encode(v)]}.flatten)].to_json 
+      end
       @http_client.request method, endpoint, headers, body, &block
     end
 
     def sign_up username, password, opts={}, &block
       call_api :post, 'users', {'username' => username, 'password' => password}.update(opts || {}), &block
+    end
+
+    def log_in username, password, &block
+      #call_api :get, 'login', {'username' => username, 'password' => password}, &block
+      #call_api :get, 'login', "username=#{username}&password=#{password}", &block
+      call_api :get, "login?username=#{username}&password=#{password}", nil, &block
     end
 
     def find parse_class, object_id_or_conditions, opts={}

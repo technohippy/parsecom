@@ -1,29 +1,45 @@
 # Parsecom
 
-TODO: Write a gem description
-
-## Installation
-
-Add this line to your application's Gemfile:
-
-    gem 'parsecom'
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install parsecom
+Yet-Another Parse.com Library written in Pure Ruby
 
 ## Usage
 
-TODO: Write usage instructions here
+### Preparing
 
-## Contributing
+Before using the library, you should import this and set your credentials on 
+the library.
 
-1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+    require 'parsecom'
+    Parse.credentials application_id:'YOUR APPID', api_key:'YOUR APIKEY'
+
+### Declaring Parse Classes
+
+There are three ways to declare a parse class.
+
+First, you can declare a ruby class inherited from Parse::Object. By using
+this way, you can add your own properties and methods to the class.
+
+    class YourParseClass < Parse::Object
+      # ..snip..
+    end
+
+Secondly, you can also declare your parse class by calling the Parse::Object 
+method. 
+
+    Parse::Object(:YourParseClass)
+
+It returns a parse class, so that you can call 
+
+    Parse::Object(:YourParseClass).find :limit => 3
+
+Lastly, Parse::Object class provides create method for you to declare new
+class.
+
+    Parse::Object.create :YourParseClass
+
+It may suitable for writing code in declarative programming style.
+
+### Creating Objects
+
+### Retrieving Objects
+

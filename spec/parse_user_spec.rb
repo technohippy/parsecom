@@ -11,6 +11,9 @@ end
 
 describe Parse::User, 'when it logs in' do
   it 'should get the session token' do
+    user = Parse::User.log_in 'username', 'password'
+    user.obj_id.should be_an_instance_of String
+    user.parse_client.session_token.should be_an_instance_of String
   end
 end
 

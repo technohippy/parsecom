@@ -9,6 +9,7 @@ module Parse
       req = eval("Net::HTTP::#{method.to_s.capitalize}").new endpoint, headers
       req.body = body if body
       client = Net::HTTP.new @host, 443
+      #client.set_debug_output $stderr
       client.use_ssl = true
       client.start do
         resp = client.request req
