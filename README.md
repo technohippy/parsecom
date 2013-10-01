@@ -93,7 +93,7 @@ result.score = 73453
 result.save
 ```
 
-If you would like to update an attribute without retrieving it, you can use
+If you want to update attributes without retrieving the object, you can use
 the Parse::Client object for it.
 
 ```ruby
