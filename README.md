@@ -81,6 +81,27 @@ results = GameScore.find :where => {:objectId => 'Ed1nuqPvcm'}
 result = GameScore.find 'Ed1nuqPvcm'
 ```
 
+More complex search
+
+```ruby
+# useing Query object directly
+results = Parse::Query.new(GameScore).
+  limit(10).
+  order(score).
+  where do
+    column(:score).gte(1000).lte(3000)
+    column(:cheatMode).eq(false)
+  end.
+  invoke
+
+# using Query object through Parse::Object
+results = GameScore.find :limit => 10, :order => 'score', 
+  :where => proc{
+    column(:score).gte(1000).lte(3000)
+    column(:cheatMode).eq(false)
+  }
+```
+
 To know more about retrieving objects, see spec/parse_query_spec.rb
 
 ### Updating Objects
