@@ -41,9 +41,8 @@ ex. Parse.credentials application_id: APPLICATION_ID, api_key: API_KEY
     end
 
     def log_in username, password, &block
-      #call_api :get, 'login', {'username' => username, 'password' => password}, &block
-      #call_api :get, 'login', "username=#{username}&password=#{password}", &block
-      call_api :get, "login?username=#{username}&password=#{password}", nil, &block
+      call_api :get, "login?username=#{URI.encode username}&password=#{
+        URI.encode password}", nil, &block
     end
 
     def find parse_class, object_id_or_conditions, opts={}
@@ -91,7 +90,16 @@ ex. Parse.credentials application_id: APPLICATION_ID, api_key: API_KEY
         include = [include] unless include.is_a? Array
         query.include include
       end
-      query.where &conditions[:where] if conditions.has_key? :where
+      if conditions.has_key? :where
+        case condition = conditions[:where]
+        when Hash
+          query.where condition
+        when Proc
+          query.where condition
+        else
+          raise 'wrong condition'
+        end
+      end
       query.invoke
     end
 

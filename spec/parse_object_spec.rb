@@ -45,6 +45,10 @@ describe Parse::Object, 'when it creates a new parse object' do
     class_as = ClassA.find :where => proc{column(:columnB).gt 5},
       :order => 'createdAt', :keys => 'columnB', :limit => 3
     class_as.size.should == 3
+
+    class_a = ClassA.find :where => {'objectId' => 'avp6UKaG1k'},
+      :order => 'createdAt', :keys => 'columnB', :limit => 3
+    class_a.size.should == 1
   end
 end
 

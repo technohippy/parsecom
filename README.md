@@ -22,7 +22,7 @@ First, you can declare a ruby class inherited from Parse::Object. By using
 this way, you can add your own properties and methods to the class.
 
 ```ruby
-class YourParseClass < Parse::Object
+class GameScore < Parse::Object
   # ..snip..
 end
 ```
@@ -31,25 +31,76 @@ Secondly, you can also declare your parse class by calling the Parse::Object
 method. 
 
 ```ruby
-Parse::Object(:YourParseClass)
+Parse::Object(:GameScore)
 ```
 
-It returns a parse class, so that you can call 
+It returns a parse class, so that you can call its class methods directly.
 
 ```ruby
-Parse::Object(:YourParseClass).find :limit => 3
+Parse::Object(:GameScore).find :limit => 3
 ```
 
 Lastly, Parse::Object class provides create method for you to declare new
 class.
 
 ```ruby
-Parse::Object.create :YourParseClass
+Parse::Object.create :GameScore
 ```
 
-It may suitable for writing code in declarative programming style.
+It may suitable for writing code in declarative style.
 
 ### Creating Objects
 
+To create new parse object, juse new and save the object.
+
+```ruby
+game_score = GameScore.new
+game_score.score = 1337
+game_score.playerName = 'Sean Plott'
+game_score.cheatMode = false
+game_score.new? # => true
+game_score.save
+game_score.new? # => false
+game_score.obj_id # => 'Ed1nuqPvcm'
+```
+
 ### Retrieving Objects
 
+There are two ways to retrieve objects. One is using Query objects directly and
+another is using Parse::Object as a facade of query objects.
+
+```ruby
+# useing Query object directly
+query = Parse::Query.new GameScore
+query.where :objectId => 'Ed1nuqPvcm'
+results = query.invoke
+
+# using Query object through Parse::Object
+results = GameScore.find :where => {:objectId => 'Ed1nuqPvcm'}
+# if you would like to find by objectId, you can easily pass it directly
+result = GameScore.find 'Ed1nuqPvcm'
+```
+
+To know more about retrieving objects, see spec/parse_query_spec.rb
+
+### Updating Objects
+
+To update attributes, just update the attribute and save.
+
+```ruby
+result = GameScore.find 'Ed1nuqPvcm'
+result.score = 73453
+result.save
+```
+
+If you would like to update an attribute without retrieving it, you can use
+the Parse::Client object for it.
+
+```ruby
+score = GameScore.new :objectId => 'Ed1nuqPvcm'
+Parse::Client.default_client.update score, :score => 73453
+```
+
+### Deleting Objects
+
+TBD
