@@ -47,6 +47,10 @@ ex. Parse.credentials application_id: APPLICATION_ID, api_key: API_KEY
         URI.encode password}", nil, &block
     end
 
+    def log_out
+      @session_token = nil
+    end
+
     def find parse_class, object_id_or_conditions, opts={}
       if object_id_or_conditions.is_a? String
         find_by_id parse_class, object_id_or_conditions, opts

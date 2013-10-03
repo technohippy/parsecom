@@ -3,6 +3,10 @@ module Parse
   class User < Object
 
     class << self
+      def parse_class_name
+        '_User'
+      end
+
       def sign_up username, password, hash={}
         self.new(username, password, hash).sign_up
       end
@@ -12,10 +16,14 @@ module Parse
       end
     end
 
-    def initialize username, password, hash={}
-      super hash
-      @username = username
-      @password = password
+    def initialize username=nil, password=nil, hash={}
+      if username.is_a? Hash
+        super username
+      else
+        super hash
+        @username = username
+        @password = password
+      end
     end
 
     def sign_up
@@ -42,6 +50,8 @@ module Parse
     end
 
     def log_out
+      parse_client.log_out
+      self
     end
   end
 end

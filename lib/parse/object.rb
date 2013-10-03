@@ -1,16 +1,25 @@
 # coding:utf-8
 module Parse
+  RESERVED_PARSE_CLASS = {
+    '_User' => 'Parse::User'
+  }
+
   class Object
+
     class << self
       attr_accessor :parse_class_name, :parse_client, :auto_camel_case
 
       def create parse_class_name, mod=::Object
         raise 'already defined' if mod.const_defined? parse_class_name
 
-        klass = Class.new(Parse::Object)
-        klass.parse_class_name = parse_class_name.to_sym
-        klass.auto_camel_case = true
-        mod.const_set parse_class_name, klass
+        if RESERVED_PARSE_CLASS.has_key? parse_class_name.to_s
+          eval RESERVED_PARSE_CLASS[parse_class_name.to_s]
+        else
+          klass = Class.new(Parse::Object)
+          klass.parse_class_name = parse_class_name.to_sym
+          klass.auto_camel_case = true
+          mod.const_set parse_class_name, klass
+        end
       end
 
       def parse_class_name
@@ -169,8 +178,12 @@ module Parse
   # subclass of ParseObject for the given parse_class_name
   #
   def self.Object parse_class_name, mod=::Object
-    Parse::Object.create parse_class_name, mod \
-      unless mod.const_defined? parse_class_name
-    mod.const_get parse_class_name
+    if RESERVED_PARSE_CLASS.has_key? parse_class_name.to_s
+      eval RESERVED_PARSE_CLASS[parse_class_name.to_s]
+    else
+      Parse::Object.create parse_class_name, mod \
+        unless mod.const_defined? parse_class_name
+      mod.const_get parse_class_name
+    end
   end
 end

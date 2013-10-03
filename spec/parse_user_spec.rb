@@ -21,3 +21,12 @@ describe Parse::User, 'when it logs out' do
   it 'should get the session token' do
   end
 end
+
+describe Parse::User, 'when it is included in other query' do
+  it 'should return a valid User object' do
+    class_a = ClassA.find 'UUqhbnuTYx', :include => 'user'
+    user = class_a.user
+    user.should be_an_instance_of Parse::User
+    user.obj_id.should == '5VuUwoEe0j'
+  end
+end

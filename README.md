@@ -67,7 +67,7 @@ game_score.obj_id # => 'Ed1nuqPvcm'
 ### Retrieving Objects
 
 There are two ways to retrieve objects. One is using Query objects directly and
-another is using Parse::Object as a facade of query objects.
+another is using Parse::Object as a facade of a query object.
 
 ```ruby
 # useing Query object directly
@@ -81,7 +81,7 @@ results = GameScore.find :where => {:objectId => 'Ed1nuqPvcm'}
 result = GameScore.find 'Ed1nuqPvcm'
 ```
 
-More complex search
+More complex query
 
 ```ruby
 # useing Query object directly
