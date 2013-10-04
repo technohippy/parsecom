@@ -11,7 +11,14 @@ the library.
 
 ```ruby
 require 'parsecom'
-Parse.credentials application_id:'YOUR APPID', api_key:'YOUR APIKEY'
+Parse.credentials :application_id => 'YOUR APPID', :api_key => 'YOUR APIKEY'
+```
+
+If you have some plan to use the master_key, please set it.
+
+```ruby
+Parse.credentials :application_id => 'YOUR APPID', :api_key => 'YOUR APIKEY', 
+  :master_key => 'YOUR MASTER KEY'
 ```
 
 ### Declaring Parse Classes
@@ -136,4 +143,13 @@ user = Parse::User.sign_up 'YOUR USERNAME', 'YOUR PASSWORD'
 
 ```ruby
 user = Parse::User.log_in 'YOUR USERNAME', 'YOUR PASSWORD'
+```
+
+### Security
+
+If you add an exclamation mark, "!" after the method name, the method is executed by using the master key.
+
+```ruby
+class_a = ClassA.new :columnA => 'Hello, parse.com'
+class_a.save!
 ```

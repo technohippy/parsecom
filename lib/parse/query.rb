@@ -28,6 +28,7 @@ module Parse
         : "classes/#{@parse_class_name}"
       @parse_client.call_api :get, "#{endpoint}?#{to_params}", nil, &block
     end
+    alias run invoke
 
     def limit val=nil
       if val
