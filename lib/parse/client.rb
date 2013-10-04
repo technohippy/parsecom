@@ -125,13 +125,13 @@ module Parse
     end
 
     def update parse_object, values
-      call_api :put, "classes/#{parse_object.parse_class_name}/#{parse_object.object_id}", values.to_json do |resp_body|
+      call_api :put, "classes/#{parse_object.parse_class_name}/#{parse_object.obj_id}", values.to_json do |resp_body|
         resp_body
       end
     end
 
     def delete parse_object
-      call_api :delete, "classes/#{parse_object.parse_class_name}/#{parse_object.object_id}" do |resp_body|
+      call_api :delete, "classes/#{parse_object.parse_class_name}/#{parse_object.obj_id}" do |resp_body|
         resp_body
       end
     end
