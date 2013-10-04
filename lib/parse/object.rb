@@ -33,6 +33,10 @@ module Parse
       def find object_id_or_conditions, opts={}
         parse_client.find self, object_id_or_conditions, opts
       end
+
+      def find! object_id_or_conditions, opts={}
+        parse_client.find! self, object_id_or_conditions, opts
+      end
     end
 
     attr_accessor :obj_id, :created_at, :updated_at, :acl
@@ -70,21 +74,32 @@ module Parse
       self.class.parse_class_name
     end
 
-    def save hash=@updated_hash
+    def save hash=@updated_hash, use_master_key=false
       check_deleted!
+
+      unless hash.is_a? Hash
+        hash = @updated_hash
+        use_master_key = hash 
+      end
       hash = string_keyed_hash hash
       if new?
-        create hash
+        create hash, use_master_key
       else
-        update hash
+        update hash, use_master_key
       end
     end
 
-    def create hash
+    def save! hash=@updated_hash
+      save hash, true
+    end
+
+    def create hash, use_master_key=false
       check_deleted!
       hash = string_keyed_hash hash
       @updated_hash.update hash
-      parse_client.create(self, @updated_hash).tap do |response|
+      #parse_client.create(self, @updated_hash).tap do |response|
+      method = use_master_key ? :create! : :create
+      parse_client.send(method, self, @updated_hash).tap do |response|
         @obj_id = response['objectId']
         @created_at = Date.parse response['createdAt']
         @updated_at = @created_at
@@ -93,23 +108,39 @@ module Parse
         @updated_hash.clear
       end
     end
+    
+    def create! hash
+      create hash, true
+    end
 
-    def update hash
+    def update hash, use_master_key=false
       check_deleted!
       hash = string_keyed_hash hash
-      parse_client.update(self, hash).tap do |response|
+      #parse_client.update(self, hash).tap do |response|
+      method = use_master_key ? :update! : :update
+      parse_client.send(method, self, hash).tap do |response|
         @updated_at = Date.parse response['updatedAt']
         @raw_hash.update @updated_hash
         @updated_hash.clear
       end
     end
 
-    def delete
+    def update! hash
+      update hash, true
+    end
+
+    def delete use_master_key=false
       raise 'You cannot delete new object' if new?
       check_deleted!
-      parse_client.delete(self).tap do |response|
+      #parse_client.delete(self).tap do |response|
+      method = use_master_key ? :delete! : :delete
+      parse_client.send(method, self).tap do |response|
         @deleted = true
       end
+    end
+
+    def delete!
+      delete true
     end
 
     def obj_id

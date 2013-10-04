@@ -8,7 +8,7 @@ Gem::Specification.new do |gem|
   gem.version       = Parse::VERSION
   gem.authors       = ["Ando Yasushi"]
   gem.email         = ["andyjpn@gmail.com"]
-  gem.description   = %q{Pure Ruby version of parse.com client. This library allow you to access straightforwardly to parse.com REST API.}
+  gem.description   = %q{Pure Ruby version of parse.com client. This library allows you to access straightforwardly to parse.com REST API.}
   gem.summary       = %q{Pure Ruby version of parse.com client}
   gem.homepage      = "https://github.com/technohippy/parsecom"
 

@@ -5,19 +5,20 @@ module Parse
     API_VERSION = 1
     @@default_client = nil
 
-    attr_accessor :http_client, :session_token
+    attr_accessor :http_client, :session_token, :master_key
 
     def self.default_client
       @@default_client ||= new
     end
 
-    def initialize application_id=nil, api_key=nil, http_client=nil
+    def initialize application_id=nil, api_key=nil, master_key=nil, http_client=nil
       @application_id = application_id || Parse.application_id
       @api_key = api_key || Parse.api_key
+      @master_key = master_key || Parse.master_key
       if @application_id.nil? || @api_key.nil?
-        raise ArgumentError.new <<-EOS
-Both Application ID and API Key must be set.
-ex. Parse.credentials application_id: APPLICATION_ID, api_key: API_KEY
+        raise ArgumentError.new <<-EOS.gsub(/^ +/)
+          Both Application ID and API Key must be set.
+          ex. Parse.credentials application_id: APPLICATION_ID, api_key: API_KEY
         EOS
       end
       @http_client = http_client || Parse::HttpClient.new(API_SERVER)
@@ -25,17 +26,25 @@ ex. Parse.credentials application_id: APPLICATION_ID, api_key: API_KEY
 
     def call_api method, endpoint, body=nil, opt_headers={}, &block
       endpoint = "/#{API_VERSION}/#{endpoint}" unless endpoint[0] == '/'
-      headers = {
-        'X-Parse-Application-Id' => @application_id,
-        'X-Parse-REST-API-Key' => @api_key,
-        'Content-Type' => 'application/json'
-      }
-      headers.update('X-Parse-Session-Token' => @session_token) if @session_token
-      headers.update opt_headers
+      headers = build_headers opt_headers
       if body.is_a?(Hash)
         body = Hash[*(body.to_a.map{|k, v| [k, URI.encode(v)]}.flatten)].to_json 
       end
       @http_client.request method, endpoint, headers, body, &block
+    end
+
+    def build_headers opt_headers={}
+      headers = {
+        'X-Parse-Application-Id' => @application_id,
+        'Content-Type' => 'application/json'
+      }
+      if @use_master_key
+        headers['X-Parse-Master-Key'] = @master_key
+      else
+        headers['X-Parse-REST-API-Key'] = @api_key
+      end
+      headers['X-Parse-Session-Token'] = @session_token if @session_token
+      headers.update opt_headers
     end
 
     def sign_up username, password, opts={}, &block
@@ -136,6 +145,34 @@ ex. Parse.credentials application_id: APPLICATION_ID, api_key: API_KEY
           raise StandartError.new 'unknown error'
         end
       end
+    end
+
+    def use_master_key!
+      self.use_master_key = true
+    end
+
+    def use_master_key= val
+      raise ArgumentError.new('master_key is not set.') if val && !@master_key
+      @use_master_key = val
+    end
+
+    def use_master_key &block
+      return @use_master_key unless block
+
+      tmp, @use_master_key = @use_master_key, true
+      ret = block.call
+      @use_master_key = tmp
+      ret
+    end
+
+    %w(find find_by_id find_by_query create update delete call_function).each do |name|
+      eval <<-EOS
+        def #{name}! *args, &block
+          use_master_key do
+            #{name} *args, &block
+          end
+        end
+      EOS
     end
 
     def method_missing name, *args, &block

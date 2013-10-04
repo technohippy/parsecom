@@ -19,6 +19,7 @@ require 'parse/file'
 module Parse
   @@application_id = nil
   @@api_key = nil
+  @@master_key = nil
   @@auto_snake_case = false
 
   module_function
@@ -39,9 +40,18 @@ module Parse
     @@api_key = api_key
   end
 
+  def master_key
+    @@master_key
+  end
+
+  def master_key= master_key
+    @@master_key = master_key
+  end
+
   def credentials hash
     @@application_id = hash[:application_id]
     @@api_key = hash[:api_key]
+    @@master_key = hash[:master_key]
   end
 
   def credentials= hash
