@@ -11,6 +11,7 @@ Gem::Specification.new do |gem|
   gem.description   = %q{Pure Ruby version of parse.com client. This library allows you to access straightforwardly to parse.com REST API.}
   gem.summary       = %q{Pure Ruby version of parse.com client}
   gem.homepage      = "https://github.com/technohippy/parsecom"
+  gem.license       = "MIT"
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
