@@ -16,6 +16,3 @@ VCR.configure do |c|
 end
 
 require 'parsecom'
-# setup Parse object
-Parse.credentials application_id: ENV['APPLICATION_ID'], api_key: ENV['API_KEY'], master_key: ENV['MASTER_KEY']
-#puts('set your credentials in spec/spec_helper.rb and remove this line') || exit

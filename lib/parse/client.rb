@@ -16,7 +16,7 @@ module Parse
       @api_key = api_key || Parse.api_key
       @master_key = master_key || Parse.master_key
       if @application_id.nil? || @api_key.nil?
-        raise ArgumentError.new <<-EOS.gsub(/^ +/)
+        raise ArgumentError.new <<-EOS.gsub(/^ +/, '')
           Both Application ID and API Key must be set.
           ex. Parse.credentials application_id: APPLICATION_ID, api_key: API_KEY
         EOS
@@ -63,7 +63,9 @@ module Parse
     end
 
     def find parse_class, object_id_or_conditions, opts={}
-      if object_id_or_conditions.is_a? String
+      if object_id_or_conditions == :all
+        find_by_query parse_class, opts
+      elsif object_id_or_conditions.is_a? String
         find_by_id parse_class, object_id_or_conditions, opts
       elsif object_id_or_conditions.is_a? Hash
         find_by_query parse_class, object_id_or_conditions

@@ -17,9 +17,9 @@ require 'parse/pointer'
 require 'parse/file'
 
 module Parse
-  @@application_id = nil
-  @@api_key = nil
-  @@master_key = nil
+  @@application_id = ENV['PARSE_APPLICATION_ID']
+  @@api_key = ENV['PARSE_API_KEY']
+  @@master_key = ENV['PARSE_MASTER_KEY']
   @@auto_snake_case = false
 
   module_function

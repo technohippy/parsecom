@@ -37,6 +37,14 @@ module Parse
       def find! object_id_or_conditions, opts={}
         parse_client.find! self, object_id_or_conditions, opts
       end
+
+      def find_all opts={}
+        find :all, opts
+      end
+
+      def find_all! opts={}
+        find! :all, opts
+      end
     end
 
     attr_accessor :parse_object_id, :created_at, :updated_at, :acl
