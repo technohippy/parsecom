@@ -32,23 +32,31 @@ describe Parse::Object, 'when it defines a parse class' do
 end
 
 describe Parse::Object, 'when it creates a new parse object' do
+  a_obj_id = nil
   it 'should create a parse object' do
-    class_a = ClassA.new
-    class_a.columnA = 'Hello, parse.com'
-    class_a.new?.should be_true
-    class_a.save
-    class_a.new?.should be_false
+    VCR.use_cassette 'object_new' do
+      class_a = ClassA.new
+      class_a.columnA = 'Hello, parse.com'
+      class_a.new?.should be_true
+      class_a.save
+      class_a.new?.should be_false
+      a_obj_id = class_a.obj_id
+    end
+  end
 
-    class_a2 = ClassA.find class_a.obj_id
-    class_a2.columnA.should eql('Hello, parse.com')
+  it 'should create a parse object' do
+    VCR.use_cassette 'object_find' do
+      class_a2 = ClassA.find a_obj_id
+      class_a2.columnA.should eql('Hello, parse.com')
 
-    class_as = ClassA.find :where => proc{column(:columnB).gt 5},
-      :order => 'createdAt', :keys => 'columnB', :limit => 3
-    class_as.size.should == 3
+      class_as = ClassA.find :where => proc{column(:columnB).gt 5},
+        :order => 'createdAt', :keys => 'columnB', :limit => 3
+      class_as.size.should == 3
 
-    class_a = ClassA.find :where => {'objectId' => 'UUqhbnuTYx'},
-      :order => 'createdAt', :keys => 'columnB', :limit => 3
-    class_a.size.should == 1
+      class_a = ClassA.find :where => {'objectId' => 'UUqhbnuTYx'},
+        :order => 'createdAt', :keys => 'columnB', :limit => 3
+      class_a.size.should == 1
+    end
   end
 end
 

@@ -36,7 +36,9 @@ module Parse
     def build_headers opt_headers={}
       headers = {
         'X-Parse-Application-Id' => @application_id,
-        'Content-Type' => 'application/json'
+        'Content-Type' => 'application/json',
+        'Accept' => 'application/json',
+        'User-Agemt' => 'A parse.com client for ruby'
       }
       if @use_master_key
         headers['X-Parse-Master-Key'] = @master_key

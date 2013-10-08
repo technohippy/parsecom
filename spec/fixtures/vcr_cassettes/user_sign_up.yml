@@ -1,0 +1,60 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.parse.com/1/users
+    body:
+      encoding: UTF-8
+      string: ! '{"username":"username692","password":"password"}'
+    headers:
+      X-Parse-Application-Id:
+      - 5pAcGK0rtDuRmuyolkXiVBJtdPcpbNrTTjfUzjrk
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      User-Agemt:
+      - A parse.com client for ruby
+      X-Parse-Rest-Api-Key:
+      - PjBImOQdiZgx5NPVpqc2qV29EmSQrHwj9mJkUfDN
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Access-Control-Allow-Origin:
+      - ! '*'
+      Access-Control-Request-Method:
+      - ! '*'
+      Cache-Control:
+      - no-cache
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Mon, 07 Oct 2013 10:54:03 GMT
+      Location:
+      - https://api.parse.com/1/users/eajRLwWOkb
+      Server:
+      - nginx/1.4.2
+      Set-Cookie:
+      - _parse_session=BAh7BkkiD3Nlc3Npb25faWQGOgZFRiIlYTJjMzNiMmY0ODI5Njc5OWI4OTc4NjY4MTVlM2RmZjk%3D--7f32b0c797f8deecb339ca955f2db74436d09f33;
+        domain=.parse.com; path=/; expires=Wed, 06-Nov-2013 10:54:03 GMT; secure;
+        HttpOnly
+      Status:
+      - 201 Created
+      X-Runtime:
+      - '1.708287'
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      Content-Length:
+      - '107'
+      Connection:
+      - keep-alive
+    body:
+      encoding: US-ASCII
+      string: ! '{"createdAt":"2013-10-07T10:54:03.363Z","objectId":"eajRLwWOkb","sessionToken":"pnypzjqymzhp74wdjo171lq79"}'
+    http_version: 
+  recorded_at: Mon, 07 Oct 2013 10:54:03 GMT
+recorded_with: VCR 2.4.0
