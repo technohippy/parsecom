@@ -23,6 +23,7 @@ Parse.credentials :application_id => 'YOUR APPID', :api_key => 'YOUR APIKEY',
 
 If you do not want to write your credentials on your code directly,
 please set environment variables:
+
     export PARSE_APPLICATION_ID="<YOUR_APPLICATION_ID>"
     export PARSE_API_KEY="<YOUR_API_KEY>"
     export PARSE_MASTER_KEY="<YOUR_MASTER_KEY>"
