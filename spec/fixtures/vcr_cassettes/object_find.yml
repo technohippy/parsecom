@@ -2,13 +2,13 @@
 http_interactions:
 - request:
     method: get
-    uri: https://api.parse.com/1/classes/ClassA/ge2I2CgvXC
+    uri: https://api.parse.com/1/classes/ClassA/vI8RdTV68d
     body:
       encoding: US-ASCII
       string: ''
     headers:
       X-Parse-Application-Id:
-      - 5pAcGK0rtDuRmuyolkXiVBJtdPcpbNrTTjfUzjrk
+      - <X-Parse-Application-Id>
       Content-Type:
       - application/json
       Accept:
@@ -16,7 +16,7 @@ http_interactions:
       User-Agemt:
       - A parse.com client for ruby
       X-Parse-Rest-Api-Key:
-      - PjBImOQdiZgx5NPVpqc2qV29EmSQrHwj9mJkUfDN
+      - <X-Parse-REST-API-Key>
       User-Agent:
       - Ruby
   response:
@@ -33,19 +33,17 @@ http_interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Tue, 08 Oct 2013 11:19:40 GMT
+      - Tue, 08 Oct 2013 13:18:30 GMT
       Etag:
-      - ! '"6bc7c2a7299e33e2235c544283ccd445"'
+      - ! '"5016c685bf75aea12be4bdc0726b8abb"'
       Server:
       - nginx/1.4.2
       Set-Cookie:
-      - _parse_session=BAh7BkkiD3Nlc3Npb25faWQGOgZFRiIlZDY5NjFjY2NjNmU4MTVmODVkNWYwNDQzNDg4MWE5YmE%3D--630d75f115e613c4f4fd068ada7eee6b33a2da79;
-        domain=.parse.com; path=/; expires=Thu, 07-Nov-2013 11:19:40 GMT; secure;
-        HttpOnly
+      - <COOKIE-KEY>
       Status:
       - 200 OK
       X-Runtime:
-      - '0.045243'
+      - '0.190291'
       X-Ua-Compatible:
       - IE=Edge,chrome=1
       Content-Length:
@@ -54,9 +52,9 @@ http_interactions:
       - keep-alive
     body:
       encoding: US-ASCII
-      string: ! '{"columnA":"Hello, parse.com","createdAt":"2013-10-08T11:16:46.431Z","updatedAt":"2013-10-08T11:16:46.431Z","objectId":"ge2I2CgvXC"}'
+      string: ! '{"columnA":"Hello, parse.com","createdAt":"2013-10-08T13:18:28.749Z","updatedAt":"2013-10-08T13:18:28.749Z","objectId":"vI8RdTV68d"}'
     http_version: 
-  recorded_at: Tue, 08 Oct 2013 11:19:40 GMT
+  recorded_at: Tue, 08 Oct 2013 13:18:29 GMT
 - request:
     method: get
     uri: https://api.parse.com/1/classes/ClassA?keys=columnB&limit=3&order=createdAt&where=%7B%22columnB%22:%7B%22$gt%22:5%7D%7D
@@ -65,7 +63,7 @@ http_interactions:
       string: ''
     headers:
       X-Parse-Application-Id:
-      - 5pAcGK0rtDuRmuyolkXiVBJtdPcpbNrTTjfUzjrk
+      - <X-Parse-Application-Id>
       Content-Type:
       - application/json
       Accept:
@@ -73,7 +71,7 @@ http_interactions:
       User-Agemt:
       - A parse.com client for ruby
       X-Parse-Rest-Api-Key:
-      - PjBImOQdiZgx5NPVpqc2qV29EmSQrHwj9mJkUfDN
+      - <X-Parse-REST-API-Key>
       User-Agent:
       - Ruby
   response:
@@ -90,19 +88,17 @@ http_interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Tue, 08 Oct 2013 11:19:40 GMT
+      - Tue, 08 Oct 2013 13:18:31 GMT
       Etag:
       - ! '"b35ed59f2d61b8185524fd55b7570ed1"'
       Server:
       - nginx/1.4.2
       Set-Cookie:
-      - _parse_session=BAh7BkkiD3Nlc3Npb25faWQGOgZFRiIlMDllNzU3MWFkMTk5ZWYzMTM4NzhmNjdjNGI5OWVlZGQ%3D--99378e786b2c8882feb44146343b2a3871cfaef2;
-        domain=.parse.com; path=/; expires=Thu, 07-Nov-2013 11:19:40 GMT; secure;
-        HttpOnly
+      - <COOKIE-KEY>
       Status:
       - 200 OK
       X-Runtime:
-      - '0.047864'
+      - '0.199730'
       X-Ua-Compatible:
       - IE=Edge,chrome=1
       Content-Length:
@@ -113,7 +109,7 @@ http_interactions:
       encoding: US-ASCII
       string: ! '{"results":[{"columnB":100,"createdAt":"2013-10-03T08:52:06.000Z","updatedAt":"2013-10-03T09:14:45.177Z","objectId":"UUqhbnuTYx"},{"columnB":100,"createdAt":"2013-10-03T09:13:55.850Z","updatedAt":"2013-10-03T09:14:42.814Z","objectId":"ZvYdVUQ6bM"},{"columnB":100,"createdAt":"2013-10-03T09:14:26.327Z","updatedAt":"2013-10-03T09:14:40.863Z","objectId":"gAU5Soepva"}]}'
     http_version: 
-  recorded_at: Tue, 08 Oct 2013 11:19:41 GMT
+  recorded_at: Tue, 08 Oct 2013 13:18:31 GMT
 - request:
     method: get
     uri: https://api.parse.com/1/classes/ClassA?keys=columnB&limit=3&order=createdAt&where=%7B%22objectId%22:%22UUqhbnuTYx%22%7D
@@ -122,7 +118,7 @@ http_interactions:
       string: ''
     headers:
       X-Parse-Application-Id:
-      - 5pAcGK0rtDuRmuyolkXiVBJtdPcpbNrTTjfUzjrk
+      - <X-Parse-Application-Id>
       Content-Type:
       - application/json
       Accept:
@@ -130,7 +126,7 @@ http_interactions:
       User-Agemt:
       - A parse.com client for ruby
       X-Parse-Rest-Api-Key:
-      - PjBImOQdiZgx5NPVpqc2qV29EmSQrHwj9mJkUfDN
+      - <X-Parse-REST-API-Key>
       User-Agent:
       - Ruby
   response:
@@ -147,19 +143,17 @@ http_interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Tue, 08 Oct 2013 11:19:41 GMT
+      - Tue, 08 Oct 2013 13:18:32 GMT
       Etag:
       - ! '"25e49608238780e90afc7e4a8342ce9c"'
       Server:
       - nginx/1.4.2
       Set-Cookie:
-      - _parse_session=BAh7BkkiD3Nlc3Npb25faWQGOgZFRiIlYjQ5OTI5ZjY3Njc1ZDc0N2NhMTNkMmVlZWI1ZWQzZDg%3D--6536f4c45ea0228f8a606a986a7960a69877ab0f;
-        domain=.parse.com; path=/; expires=Thu, 07-Nov-2013 11:19:41 GMT; secure;
-        HttpOnly
+      - <COOKIE-KEY>
       Status:
       - 200 OK
       X-Runtime:
-      - '0.041532'
+      - '0.091277'
       X-Ua-Compatible:
       - IE=Edge,chrome=1
       Content-Length:
@@ -170,5 +164,5 @@ http_interactions:
       encoding: US-ASCII
       string: ! '{"results":[{"columnB":100,"createdAt":"2013-10-03T08:52:06.000Z","updatedAt":"2013-10-03T09:14:45.177Z","objectId":"UUqhbnuTYx"}]}'
     http_version: 
-  recorded_at: Tue, 08 Oct 2013 11:19:41 GMT
+  recorded_at: Tue, 08 Oct 2013 13:18:32 GMT
 recorded_with: VCR 2.4.0
