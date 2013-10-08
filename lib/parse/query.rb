@@ -249,7 +249,7 @@ module Parse
       def condition_value_to_s val
         case val
         when Parse::Object
-          %Q|{"__type":"Pointer","className":"#{val.parse_class_name}","objectId":"#{val.obj_id}"}|
+          %Q|{"__type":"Pointer","className":"#{val.parse_class_name}","objectId":"#{val.parse_object_id}"}|
         else
           val.inspect
         end

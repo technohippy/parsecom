@@ -5,7 +5,7 @@ describe Parse::User, 'when it signs up' do
   it 'should create new user' do
     VCR.use_cassette 'user_sign_up' do
       user = Parse::User.sign_up "username#{rand 1000}", 'password'
-      user.obj_id.should be_an_instance_of String
+      user.parse_object_id.should be_an_instance_of String
       user.parse_client.session_token.should be_an_instance_of String
     end
   end
@@ -15,7 +15,7 @@ describe Parse::User, 'when it logs in' do
   it 'should get the session token' do
     VCR.use_cassette 'user_log_in' do
       user = Parse::User.log_in 'username', 'password'
-      user.obj_id.should be_an_instance_of String
+      user.parse_object_id.should be_an_instance_of String
       user.parse_client.session_token.should be_an_instance_of String
     end
   end
@@ -32,7 +32,7 @@ describe Parse::User, 'when it is included in other query' do
       class_a = ClassA.find 'UUqhbnuTYx', :include => 'user'
       user = class_a.user
       user.should be_an_instance_of Parse::User
-      user.obj_id.should == '5VuUwoEe0j'
+      user.parse_object_id.should == '5VuUwoEe0j'
     end
   end
 end

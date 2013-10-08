@@ -68,7 +68,7 @@ game_score.cheatMode = false
 game_score.new? # => true
 game_score.save
 game_score.new? # => false
-game_score.obj_id # => 'Ed1nuqPvcm'
+game_score.parse_object_id # => 'Ed1nuqPvcm'
 ```
 
 ### Retrieving Objects

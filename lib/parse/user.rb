@@ -28,7 +28,7 @@ module Parse
 
     def sign_up
       parse_client.sign_up @username, @password, opts do |resp_body|
-        @obj_id = resp_body['objectId']
+        @parse_object_id = resp_body['objectId']
         @created_at = resp_body['createdAt']
         @raw_hash.update(@updated_hash).update resp_body
         @updated_hash.clear
@@ -39,7 +39,7 @@ module Parse
 
     def log_in
       parse_client.log_in @username, @password do |resp_body|
-        @obj_id = resp_body['objectId']
+        @parse_object_id = resp_body['objectId']
         @created_at = resp_body['createdAt']
         @updated_at = resp_body['updatedAt']
         @raw_hash.update(@updated_hash).update resp_body

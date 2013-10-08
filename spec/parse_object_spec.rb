@@ -40,7 +40,7 @@ describe Parse::Object, 'when it creates a new parse object' do
       class_a.new?.should be_true
       class_a.save
       class_a.new?.should be_false
-      a_obj_id = class_a.obj_id
+      a_obj_id = class_a.parse_object_id
     end
   end
 

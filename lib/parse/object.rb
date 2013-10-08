@@ -39,12 +39,12 @@ module Parse
       end
     end
 
-    attr_accessor :obj_id, :created_at, :updated_at, :acl
+    attr_accessor :parse_object_id, :created_at, :updated_at, :acl
 
     def initialize hash={}
       hash = string_keyed_hash hash
       if hash.has_key? 'objectId'
-        @obj_id = hash['objectId']
+        @parse_object_id = hash['objectId']
         @raw_hash = hash
         @updated_hash = {}
       else
@@ -100,7 +100,7 @@ module Parse
       #parse_client.create(self, @updated_hash).tap do |response|
       method = use_master_key ? :create! : :create
       parse_client.send(method, self, @updated_hash).tap do |response|
-        @obj_id = response['objectId']
+        @parse_object_id = response['objectId']
         @created_at = Date.parse response['createdAt']
         @updated_at = @created_at
         @raw_hash.update @updated_hash
@@ -143,9 +143,12 @@ module Parse
       delete true
     end
 
-    def obj_id
-      @obj_id || @raw_hash['objectId']
+    def parse_object_id
+      @parse_object_id || @raw_hash['objectId']
     end
+
+    alias obj_id parse_object_id
+    alias obj_id= parse_object_id=
 
     def get_column name
       name = name.to_s
