@@ -61,7 +61,7 @@ class.
 Parse::Object.create :GameScore
 ```
 
-It may suitable for writing code in declarative style.
+It may be suitable for writing code in declarative style.
 
 ### Creating Objects
 
