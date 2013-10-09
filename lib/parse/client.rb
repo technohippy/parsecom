@@ -38,7 +38,7 @@ module Parse
         'X-Parse-Application-Id' => @application_id,
         'Content-Type' => 'application/json',
         'Accept' => 'application/json',
-        'User-Agemt' => 'A parse.com client for ruby'
+        'User-Agent' => 'A parse.com client for ruby'
       }
       if @use_master_key
         headers['X-Parse-Master-Key'] = @master_key

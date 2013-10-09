@@ -13,7 +13,7 @@ http_interactions:
       - application/json
       Accept:
       - application/json
-      User-Agemt:
+      User-Agent:
       - A parse.com client for ruby
       X-Parse-Rest-Api-Key:
       - <X-Parse-REST-API-Key>
@@ -70,7 +70,7 @@ http_interactions:
       - application/json
       Accept:
       - application/json
-      User-Agemt:
+      User-Agent:
       - A parse.com client for ruby
       X-Parse-Rest-Api-Key:
       - <X-Parse-REST-API-Key>
