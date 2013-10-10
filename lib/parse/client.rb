@@ -63,12 +63,15 @@ module Parse
     end
 
     def find parse_class, object_id_or_conditions, opts={}
-      if object_id_or_conditions == :all
+      case object_id_or_conditions
+      when :all
         find_by_query parse_class, opts
-      elsif object_id_or_conditions.is_a? String
+      when String, Symbol
         find_by_id parse_class, object_id_or_conditions, opts
-      elsif object_id_or_conditions.is_a? Hash
+      when Hash
         find_by_query parse_class, object_id_or_conditions
+      else
+        raise ArgumentError.new('the first argument should be a string, a symbol, or a hash.')
       end
     end
 

@@ -23,7 +23,7 @@ module Parse
       end
 
       def parse_class_name
-        @parse_class_name || name.split('::').last
+        @parse_class_name ||= name.split('::').last
       end
 
       def parse_client
@@ -31,11 +31,21 @@ module Parse
       end
 
       def find object_id_or_conditions, opts={}
-        parse_client.find self, object_id_or_conditions, opts
+        results = parse_client.find(self, object_id_or_conditions, opts)
+        if object_id_or_conditions.is_a? String
+          results
+        else
+          results.map {|hash| self.new hash}
+        end
       end
 
       def find! object_id_or_conditions, opts={}
-        parse_client.find! self, object_id_or_conditions, opts
+        results = parse_client.find!(self, object_id_or_conditions, opts)
+        if object_id_or_conditions.is_a? String
+          results
+        else
+          results.map {|hash| self.new hash}
+        end
       end
 
       def find_all opts={}

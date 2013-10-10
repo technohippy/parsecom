@@ -5,7 +5,7 @@ module Parse
 
     def initialize parse_class_or_name=nil
       @parse_class, @parse_class_name, @parse_client = 
-        parse_class_or_name === Parse::Object \
+        parse_class_or_name < Parse::Object \
           ? [parse_class_or_name, parse_class_or_name.parse_class_name, 
               parse_class_or_name.parse_client]
           : [nil, parse_class_or_name.to_s, Parse::Client.default_client]
