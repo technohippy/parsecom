@@ -4,11 +4,15 @@ module Parse
     attr_accessor :parse_class_name, :parse_client
 
     def initialize parse_class_or_name=nil
-      @parse_class, @parse_class_name, @parse_client = 
-        parse_class_or_name < Parse::Object \
-          ? [parse_class_or_name, parse_class_or_name.parse_class_name, 
-              parse_class_or_name.parse_client]
-          : [nil, parse_class_or_name.to_s, Parse::Client.default_client]
+      if parse_class_or_name.is_a?(Class) && parse_class_or_name < Parse::Object
+        @parse_class = parse_class_or_name
+        @parse_class_name = parse_class_or_name.parse_class_name
+        @parse_client = parse_class_or_name.parse_client
+      else
+        @parse_class = nil
+        @parse_class_name = parse_class_or_name.to_s
+        @parse_client = Parse::Client.default_client
+      end
       @limit = nil
       @skip = nil
       @count = false
