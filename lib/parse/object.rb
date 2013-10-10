@@ -5,9 +5,14 @@ module Parse
   }
 
   class Object
+    @@parse_class_vs_class_table = {}
 
     class << self
       attr_accessor :parse_class_name, :parse_client, :auto_camel_case
+
+      def register_parse_class parse_class
+        @@parse_class_vs_class_table[parse_class.parse_class_name] = parse_class
+      end
 
       def create parse_class_name, mod=::Object
         raise 'already defined' if mod.const_defined? parse_class_name
@@ -19,6 +24,7 @@ module Parse
           klass.parse_class_name = parse_class_name.to_sym
           klass.auto_camel_case = true
           mod.const_set parse_class_name, klass
+          register_parse_class klass
         end
       end
 
@@ -31,21 +37,22 @@ module Parse
       end
 
       def find object_id_or_conditions, opts={}
-        results = parse_client.find(self, object_id_or_conditions, opts)
-        if object_id_or_conditions.is_a? String
-          results
-        else
-          results.map {|hash| self.new hash}
-        end
+        results = [parse_client.find(self, object_id_or_conditions, opts)].flatten
+        results.map! {|hash| self.new hash}
       end
 
+      def find_by_id object_id, opts={}
+        find(object_id, opts).first
+      end
+
+      # TODO: need refactoring
       def find! object_id_or_conditions, opts={}
-        results = parse_client.find!(self, object_id_or_conditions, opts)
-        if object_id_or_conditions.is_a? String
-          results
-        else
-          results.map {|hash| self.new hash}
-        end
+        results = [parse_client.find!(self, object_id_or_conditions, opts)].flatten
+        results.map! {|hash| self.new hash}
+      end
+
+      def find_by_id! object_id, opts={}
+        find!(object_id, opts).first
       end
 
       def find_all opts={}
@@ -60,16 +67,35 @@ module Parse
     attr_accessor :parse_object_id, :created_at, :updated_at, :acl
 
     def initialize hash={}
+      body_hash = nil
       hash = string_keyed_hash hash
       if hash.has_key? 'objectId'
         @parse_object_id = hash['objectId']
         @raw_hash = hash
         @updated_hash = {}
+        body_hash = @raw_hash
       else
         @raw_hash = {}
         @updated_hash = hash
+        body_hash = @updated_hash
       end
       @deleted = false
+
+      hash.each do |k, v|
+        if v.is_a? Hash
+          body_hash[k] = 
+            case v['__type']
+            when 'Date'
+              Date.parse v['iso']
+            when 'File'
+              Parse::File.new v
+            when 'Pointer'
+              Parse::Pointer.new self, v
+            else
+              v
+            end
+        end
+      end
     end
 
     def new?

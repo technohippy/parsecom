@@ -1,25 +1,31 @@
 # coding:utf-8
 module Parse
   class Pointer
-    def initialize parse_client, parent_parse_class, parent_hash, parent_key, hash
-      @parse_client = parse_client
-      @parent_parse_class = parent_parse_class
-      @parent_hash = parent_hash
-      @parent_key = parent_key
+    attr_reader :object
+
+    def initialize parent, hash
+      @parent_object = parent
       @raw_hash = hash
+
+      if @raw_hash.has_key? 'body'
+        @object = pointed_parse_class.new @raw_hash['body']
+      end
     end
 
-    def load &block
-      included_parse_class_name = @raw_hash['className']
-      mod = @parent_parse_class.name.include?('::') ? \
-        eval(@perent_parse_class.name.split('::')[0..-2]) : ::Object
-      included_parse_class = Parse::Object included_parse_class_name, mod
-      @parent_hash[@parent_key] = @parse_client.find(
-        included_parse_class, @raw_hash['objectId']).tap do |real_value|
-        if block
-          block.call real_value
-        end
+    def load
+      unless @object
+        @object = pointed_parse_class.find_by_id @raw_hash['objectId']
       end
+      @object
+    end
+
+    private
+
+    def pointed_parse_class
+      included_parse_class_name = @raw_hash['className']
+      mod = @parent_object.class.name.include?('::') ? \
+        eval(@perent_object.class.name.split('::')[0..-2]) : ::Object
+      Parse::Object included_parse_class_name, mod
     end
   end
 end

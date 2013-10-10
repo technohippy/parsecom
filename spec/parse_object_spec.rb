@@ -46,7 +46,7 @@ describe Parse::Object, 'when it creates a new parse object' do
 
   it 'should create a parse object' do
     VCR.use_cassette 'object_find' do
-      class_a2 = ClassA.find a_obj_id
+      class_a2 = ClassA.find_by_id a_obj_id
       class_a2.columnA.should eql('Hello, parse.com')
 
       class_as = ClassA.find :where => proc{column(:columnB).gt 5},

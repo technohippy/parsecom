@@ -29,8 +29,10 @@ end
 describe Parse::User, 'when it is included in other query' do
   it 'should return a valid User object' do
     VCR.use_cassette 'user_find' do
-      class_a = ClassA.find 'UUqhbnuTYx', :include => 'user'
-      user = class_a.user
+      class_a = ClassA.find_by_id 'UUqhbnuTYx', :include => 'user'
+      user_pointer = class_a.user
+      user_pointer.should be_an_instance_of Parse::Pointer
+      user = user_pointer.object
       user.should be_an_instance_of Parse::User
       user.parse_object_id.should == '5VuUwoEe0j'
     end

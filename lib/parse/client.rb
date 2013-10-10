@@ -76,19 +76,22 @@ module Parse
     end
 
     def find_by_id parse_class, object_id, opts={}
-      call_api :get, "classes/#{parse_class.parse_class_name}/#{object_id}" do |resp_body|
-        convert parse_class, resp_body
-
+      parse_class_name = parse_class.is_a?(Parse::Object) \
+        ? parse_class.parse_class_name : parse_class
+      call_api :get, "classes/#{parse_class_name}/#{object_id}" do |resp_body|
         if opts.has_key? :include
-          included_keys = opts[:include]
-          included_keys = [included_keys] unless included_keys.is_a? Enumerable
+          included_keys = [opts[:include]].flatten
           included_keys.each do |included_key|
-            pointer = resp_body[included_key]
-            pointer.load
+            resp_body[included_key].tap do |pointer|
+              if pointer['__type'] == 'Pointer'
+                pointer['body'] = self.find_by_id pointer['className'], pointer['objectId']
+              else
+                raise ArgumentError.new('included column should be a pointer.')
+              end
+            end
           end
         end
-
-        parse_class.new resp_body
+        resp_body
       end
     end
 
@@ -184,26 +187,6 @@ module Parse
 
     def method_missing name, *args, &block
       call_function name, args.first
-    end
-
-    private
-
-    def convert parse_class, resp_body
-      resp_body.each do |k, v|
-        if v.is_a?(Hash) && v.has_key?('__type')
-          resp_body[k] = case v['__type']
-            when 'Date'
-              Date.parse v['iso']
-            when 'File'
-              Parse::File.new v
-            when 'Pointer'
-              # TODO: too many arguments
-              Parse::Pointer.new self, parse_class, resp_body, k, v
-            else
-              v
-            end
-        end
-      end
     end
   end
 end
