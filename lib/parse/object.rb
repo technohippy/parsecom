@@ -161,7 +161,7 @@ module Parse
       hash = string_keyed_hash hash
       #parse_client.update(self, hash).tap do |response|
       method = use_master_key ? :update! : :update
-      parse_client.send(method, self, hash).tap do |response|
+      parse_client.send(method, parse_class_name, parse_object_id, hash).tap do |response|
         @updated_at = Date.parse response['updatedAt']
         @raw_hash.update @updated_hash
         @updated_hash.clear
@@ -175,9 +175,8 @@ module Parse
     def delete use_master_key=false
       raise 'You cannot delete new object' if new?
       check_deleted!
-      #parse_client.delete(self).tap do |response|
       method = use_master_key ? :delete! : :delete
-      parse_client.send(method, self).tap do |response|
+      parse_client.send(method, parse_class_name, parse_object_id).tap do |response|
         @deleted = true
       end
     end
