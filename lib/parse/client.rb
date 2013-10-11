@@ -62,22 +62,20 @@ module Parse
       @session_token = nil
     end
 
-    def find parse_class, object_id_or_conditions, opts={}
+    def find parse_class_name, object_id_or_conditions, opts={}
       case object_id_or_conditions
       when :all
-        find_by_query parse_class, opts
+        find_by_query parse_class_name, opts
       when String, Symbol
-        find_by_id parse_class, object_id_or_conditions, opts
+        find_by_id parse_class_name, object_id_or_conditions, opts
       when Hash
-        find_by_query parse_class, object_id_or_conditions
+        find_by_query parse_class_name, object_id_or_conditions
       else
         raise ArgumentError.new('the first argument should be a string, a symbol, or a hash.')
       end
     end
 
-    def find_by_id parse_class, object_id, opts={}
-      parse_class_name = parse_class.is_a?(Parse::Object) \
-        ? parse_class.parse_class_name : parse_class
+    def find_by_id parse_class_name, object_id, opts={}
       call_api :get, "classes/#{parse_class_name}/#{object_id}" do |resp_body|
         if opts.has_key? :include
           included_keys = [opts[:include]].flatten
@@ -95,8 +93,8 @@ module Parse
       end
     end
 
-    def find_by_query parse_class, conditions
-      query = Query.new parse_class
+    def find_by_query parse_class_name, conditions
+      query = Query.new parse_class_name, self
       query.limit conditions[:limit] if conditions.has_key? :limit
       query.skip conditions[:skip] if conditions.has_key? :skip
       query.count conditions[:count] if conditions.has_key? :count
@@ -128,20 +126,20 @@ module Parse
       query.invoke
     end
 
-    def create parse_object, values
-      call_api :post, "classes/#{parse_object.parse_class_name}", values.to_json do |resp_body|
+    def create parse_class_name, values
+      call_api :post, "classes/#{parse_class_name}", values.to_json do |resp_body|
         resp_body
       end
     end
 
-    def update parse_object, values
-      call_api :put, "classes/#{parse_object.parse_class_name}/#{parse_object.parse_object_id}", values.to_json do |resp_body|
+    def update parse_class_name, parse_object_id, values
+      call_api :put, "classes/#{parse_class_name}/#{parse_object_id}", values.to_json do |resp_body|
         resp_body
       end
     end
 
-    def delete parse_object
-      call_api :delete, "classes/#{parse_object.parse_class_name}/#{parse_object.parse_object_id}" do |resp_body|
+    def delete parse_class_name, parse_object_id
+      call_api :delete, "classes/#{parse_class_name}/#{parse_object_id}" do |resp_body|
         resp_body
       end
     end

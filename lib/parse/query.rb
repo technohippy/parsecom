@@ -3,16 +3,9 @@ module Parse
     attr_reader :keys
     attr_accessor :parse_class_name, :parse_client
 
-    def initialize parse_class_or_name=nil
-      if parse_class_or_name.is_a?(Class) && parse_class_or_name < Parse::Object
-        @parse_class = parse_class_or_name
-        @parse_class_name = parse_class_or_name.parse_class_name
-        @parse_client = parse_class_or_name.parse_client
-      else
-        @parse_class = nil
-        @parse_class_name = parse_class_or_name.to_s
-        @parse_client = Parse::Client.default_client
-      end
+    def initialize parse_class_name=nil, parse_client=nil
+      @parse_class_name = parse_class_name.to_s
+      @parse_client = parse_client || Parse::Client.default_client
       @limit = nil
       @skip = nil
       @count = false
@@ -22,7 +15,7 @@ module Parse
       @keys = []
     end
 
-    def invoke &block
+    def run &block
       block = proc do |body| 
         # TODO: should handle error
         body['results']
@@ -32,7 +25,7 @@ module Parse
         : "classes/#{@parse_class_name}"
       @parse_client.call_api :get, "#{endpoint}?#{to_params}", nil, &block
     end
-    alias run invoke
+    alias invoke run
 
     def limit val=nil
       if val

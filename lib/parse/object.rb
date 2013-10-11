@@ -37,7 +37,7 @@ module Parse
       end
 
       def find object_id_or_conditions, opts={}
-        results = [parse_client.find(self, object_id_or_conditions, opts)].flatten
+        results = [parse_client.find(self.parse_class_name, object_id_or_conditions, opts)].flatten
         results.map! {|hash| self.new hash}
       end
 
@@ -47,7 +47,7 @@ module Parse
 
       # TODO: need refactoring
       def find! object_id_or_conditions, opts={}
-        results = [parse_client.find!(self, object_id_or_conditions, opts)].flatten
+        results = [parse_client.find!(self.parse_class_name, object_id_or_conditions, opts)].flatten
         results.map! {|hash| self.new hash}
       end
 
@@ -141,9 +141,8 @@ module Parse
       check_deleted!
       hash = string_keyed_hash hash
       @updated_hash.update hash
-      #parse_client.create(self, @updated_hash).tap do |response|
       method = use_master_key ? :create! : :create
-      parse_client.send(method, self, @updated_hash).tap do |response|
+      parse_client.send(method, self.parse_class_name, @updated_hash).tap do |response|
         @parse_object_id = response['objectId']
         @created_at = Date.parse response['createdAt']
         @updated_at = @created_at
