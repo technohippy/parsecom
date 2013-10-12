@@ -5,7 +5,7 @@ RSpec::Matchers.define :have_params do |expected|
   match do |actual|
     expected.to_a.map do |k, v|
       actual.include? "#{k}=#{URI.encode v.to_s}"
-    end.inject(true) {|s, v| s || v}
+    end.inject(true) {|s, v| s && v}
   end
 end
 

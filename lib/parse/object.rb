@@ -1,7 +1,9 @@
 # coding:utf-8
 module Parse
   RESERVED_PARSE_CLASS = {
-    '_User' => 'Parse::User'
+    '_User' => 'Parse::User',
+    '_Role' => 'Parse::Role',
+    '_Installation' => 'Parse::Installation'
   }
 
   class Object
@@ -33,7 +35,7 @@ module Parse
       end
 
       def parse_client
-        @parse_client ||= Parse::Client.default_client
+        @parse_client ||= Parse::Client.default
       end
 
       def find object_id_or_conditions, opts={}
@@ -90,7 +92,9 @@ module Parse
             when 'File'
               Parse::File.new v
             when 'Pointer'
-              Parse::Pointer.new self, v
+              Parse::Pointer.new v, self
+            when 'Relation'
+              Parse::Relation.new self, k, v
             else
               v
             end
@@ -210,6 +214,10 @@ module Parse
     def set_column name, value
       check_deleted!
       @updated_hash[name] = value
+    end
+
+    def to_pointer
+      Pointer.new 'className' => parse_class_name, 'objectId' => parse_object_id
     end
 
     def to_s

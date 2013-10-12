@@ -108,21 +108,12 @@ describe Parse::Query, 'when it builds conditions' do
     query.to_params.should have_params('where' => '{"post":{"$notInQuery":{"where":{"image":{"$exists":true}},"className":"Post"}}}')
     query.where.clear
 
-#    query.where do
-#      #{
-#      #  "$relatedTo":{
-#      #    "object":{
-#      #      "__type":"Pointer",
-#      #      "className":"Post",
-#      #      "objectId":"8TOXdXf3tz"
-#      #    },
-#      #    "key":"likes"
-#      #  }
-#      #}
-#      # TODO
-#    end
-#    query.to_params.should == 'where={}'
-#    query.where.clear
+    query.where do
+      pointer = Parse::Pointer.new('className' => 'Post', 'objectId' => '8TOXdXf3tz')
+      related_to :likes, pointer
+    end
+    query.to_params.should have_params('where' => '{"$relatedTo":{"object":{"__type":"Pointer","className":"Post","objectId":"8TOXdXf3tz"},"key":"likes"}}')
+    query.where.clear
 
     query.where do
       column(:wins).gt(150).or column(:wins).lt(5)

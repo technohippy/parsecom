@@ -5,11 +5,11 @@ module Parse
 
     def initialize parse_class_name=nil, parse_client=nil
       @parse_class_name = parse_class_name.to_s
-      @parse_client = parse_client || Parse::Client.default_client
+      @parse_client = parse_client || Parse::Client.default
       @limit = nil
       @skip = nil
       @count = false
-      @where = []
+      @where = [] # array of Conditions
       @order = []
       @include = []
       @keys = []
@@ -135,6 +135,12 @@ module Parse
       end
     end
     alias _or_ or_condition
+
+    def related_to column_name, pointer
+      RelatedToCondition.new(column_name, pointer).tap do |condition|
+        @where.push condition
+      end
+    end
 
     class Subquery < Query
       attr_accessor :parent
@@ -274,6 +280,17 @@ module Parse
 
       def to_s
         %Q|"$or":[#{@conditions.map {|c| "{#{c.to_s}}"}.join ','}]|
+      end
+    end
+
+    class RelatedToCondition
+      def initialize column_name, pointer
+        @column_name = column_name
+        @pointer = pointer
+      end
+
+      def to_s
+        %Q|"$relatedTo":{"object":#{@pointer.to_json},"key":"#{@column_name}"}|
       end
     end
   end

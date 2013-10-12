@@ -13,7 +13,10 @@ require 'parse/client'
 require 'parse/query'
 require 'parse/object'
 require 'parse/user'
+require 'parse/role'
+require 'parse/installation'
 require 'parse/pointer'
+require 'parse/relation'
 require 'parse/file'
 
 module Parse

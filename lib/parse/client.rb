@@ -7,7 +7,7 @@ module Parse
 
     attr_accessor :http_client, :session_token, :master_key
 
-    def self.default_client
+    def self.default
       @@default_client ||= new
     end
 

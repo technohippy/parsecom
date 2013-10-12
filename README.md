@@ -132,7 +132,7 @@ If you want to update attributes without retrieving the object, you can use
 the Parse::Client object for it.
 
 ```ruby
-Parse::Client.default_client.update :GaemScore, 'Ed1nuqPvcm', :score => 73453
+Parse::Client.default.update :GaemScore, 'Ed1nuqPvcm', :score => 73453
 ```
 
 ### Deleting Objects
