@@ -87,7 +87,7 @@ another is using Parse::Object as a facade of a query object.
 # useing Query object directly
 query = Parse::Query.new GameScore
 query.where :objectId => 'Ed1nuqPvcm'
-results = query.invoke
+results = query.run
 
 # using Query object through Parse::Object
 results = GameScore.find :where => {:objectId => 'Ed1nuqPvcm'}
@@ -133,6 +133,14 @@ the Parse::Client object for it.
 
 ```ruby
 Parse::Client.default.update :GaemScore, 'Ed1nuqPvcm', :score => 73453
+```
+
+#### Counters
+
+```ruby
+result = GameScore.find 'Ed1nuqPvcm'
+result.score = Parse::Op::Increment.new 1
+result.save
 ```
 
 ### Deleting Objects

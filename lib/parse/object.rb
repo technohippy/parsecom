@@ -163,7 +163,6 @@ module Parse
     def update hash, use_master_key=false
       check_deleted!
       hash = string_keyed_hash hash
-      #parse_client.update(self, hash).tap do |response|
       method = use_master_key ? :update! : :update
       parse_client.send(method, parse_class_name, parse_object_id, hash).tap do |response|
         @updated_at = Date.parse response['updatedAt']
