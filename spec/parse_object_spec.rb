@@ -60,10 +60,14 @@ describe Parse::Object, 'when it creates a new parse object' do
   end
 end
 
-#describe Parse::Object, 'when it updates an existing parse object' do
-#  it 'should increment a field' do
-#    class_a = ClassA.find(:all, :limit =>1).first
-#    class_a.columnB = Parse::Op::Increment.new 1
-#    class_a.save
-#  end
-#end
+describe Parse::Object, 'when it updates an existing parse object' do
+  it 'should increment a field' do
+    VCR.use_cassette 'object_increment' do
+      class_a = ClassA.find(:all, :limit =>1).first
+      val = class_a.columnB || 0
+      class_a.columnB = Parse::Op::Increment.new 1
+      class_a.save
+      class_a.columnB.should == (val + 1)
+    end
+  end
+end

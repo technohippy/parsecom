@@ -165,8 +165,9 @@ module Parse
       hash = string_keyed_hash hash
       method = use_master_key ? :update! : :update
       parse_client.send(method, parse_class_name, parse_object_id, hash).tap do |response|
-        @updated_at = Date.parse response['updatedAt']
         @raw_hash.update @updated_hash
+        @raw_hash.update response
+        @updated_at = Date.parse response['updatedAt']
         @updated_hash.clear
       end
     end
