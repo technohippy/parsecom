@@ -70,4 +70,14 @@ describe Parse::Object, 'when it updates an existing parse object' do
       class_a.columnB.should == (val + 1)
     end
   end
+
+#  it 'should add unique objects to an array field' do
+#    VCR.use_cassette 'object_add_unique' do
+#      class_a = ClassA.find(:all, :limit =>1).first
+#      size = class_a.columnF.size
+#      class_a.columnF = Parse::Op::AddUnique.new 'flying', 'kungfu'
+#      class_a.save
+#      class_a.columnF.size.should == (size + 2)
+#    end
+#  end
 end

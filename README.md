@@ -143,6 +143,14 @@ result.score = Parse::Op::Increment.new 1
 result.save
 ```
 
+#### Arrays
+
+```ruby
+result = GameScore.find 'Ed1nuqPvcm'
+result.skils = Parse::Op::AddUnique.new 'flying', 'kungfu'
+result.save
+```
+
 ### Deleting Objects
 
 TBD

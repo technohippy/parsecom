@@ -19,6 +19,9 @@ require 'parse/pointer'
 require 'parse/relation'
 require 'parse/file'
 require 'parse/op/increment'
+require 'parse/op/add'
+require 'parse/op/add_unique'
+require 'parse/op/remove'
 
 module Parse
   @@application_id = ENV['PARSE_APPLICATION_ID']
