@@ -151,6 +151,20 @@ result.skils = Parse::Op::AddUnique.new 'flying', 'kungfu'
 result.save
 ```
 
+#### Relations
+
+```ruby
+result = GameScore.find 'Ed1nuqPvcm'
+result.opponents = Parse::Op::AddRelation.new player.pointer
+result.save
+```
+
+```ruby
+result = GameScore.find 'Ed1nuqPvcm'
+result.opponents = Parse::Op::RemoveRelation.new player.pointer
+result.save
+```
+
 ### Deleting Objects
 
 TBD

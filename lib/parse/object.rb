@@ -216,7 +216,7 @@ module Parse
       @updated_hash[name] = value
     end
 
-    def to_pointer
+    def pointer
       Pointer.new 'className' => parse_class_name, 'objectId' => parse_object_id
     end
 

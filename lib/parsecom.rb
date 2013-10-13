@@ -22,6 +22,8 @@ require 'parse/op/increment'
 require 'parse/op/add'
 require 'parse/op/add_unique'
 require 'parse/op/remove'
+require 'parse/op/add_relation'
+require 'parse/op/remove_relation'
 
 module Parse
   @@application_id = ENV['PARSE_APPLICATION_ID']

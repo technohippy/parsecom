@@ -9,7 +9,7 @@ module Parse
 
     def load parse_client=Parse::Client.default
       unless @objects
-        pointer = @parent_object.to_pointer
+        pointer = @parent_object.pointer
         key = @column_name
         related_class = Parse::Object @raw_hash['className']
         @objects = related_class.find :where => proc {
