@@ -92,7 +92,7 @@ results = query.run
 # using Query object through Parse::Object
 results = GameScore.find :where => {:objectId => 'Ed1nuqPvcm'}
 # if you would like to find by objectId, you can easily pass it directly
-result = GameScore.find 'Ed1nuqPvcm'
+result = GameScore.find_by_id 'Ed1nuqPvcm'
 ```
 
 More complex query
@@ -123,7 +123,7 @@ To know more about retrieving objects, see spec/parse_query_spec.rb
 To update attributes, just update the attribute and save.
 
 ```ruby
-result = GameScore.find 'Ed1nuqPvcm'
+result = GameScore.find_by_id 'Ed1nuqPvcm'
 result.score = 73453
 result.save
 ```
@@ -138,7 +138,7 @@ Parse::Client.default.update :GaemScore, 'Ed1nuqPvcm', :score => 73453
 #### Counters
 
 ```ruby
-result = GameScore.find 'Ed1nuqPvcm'
+result = GameScore.find_by_id 'Ed1nuqPvcm'
 result.score = Parse::Op::Increment.new 1
 result.save
 ```
@@ -146,7 +146,7 @@ result.save
 #### Arrays
 
 ```ruby
-result = GameScore.find 'Ed1nuqPvcm'
+result = GameScore.find_by_id 'Ed1nuqPvcm'
 result.skils = Parse::Op::AddUnique.new 'flying', 'kungfu'
 result.save
 ```
@@ -154,20 +154,29 @@ result.save
 #### Relations
 
 ```ruby
-result = GameScore.find 'Ed1nuqPvcm'
+result = GameScore.find_by_id 'Ed1nuqPvcm'
 result.opponents = Parse::Op::AddRelation.new player.pointer
 result.save
 ```
 
 ```ruby
-result = GameScore.find 'Ed1nuqPvcm'
+result = GameScore.find_by_id 'Ed1nuqPvcm'
 result.opponents = Parse::Op::RemoveRelation.new player.pointer
 result.save
 ```
 
 ### Deleting Objects
 
-TBD
+```ruby
+result = GameScore.find_by_id 'Ed1nuqPvcm'
+result.delete
+```
+
+```ruby
+result = GameScore.find_by_id 'Ed1nuqPvcm'
+result.opponents = Parse::Op::Delete.new
+result.save
+```
 
 ### Sign up
 
