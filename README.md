@@ -63,7 +63,9 @@ Parse::Object.create :GameScore
 
 It may be suitable for writing code in declarative style.
 
-### Creating Objects
+### Objects
+
+#### Creating Objects
 
 To create new parse object, just new and save the object.
 
@@ -78,7 +80,7 @@ game_score.new? # => false
 game_score.parse_object_id # => 'Ed1nuqPvcm'
 ```
 
-### Retrieving Objects
+#### Retrieving Objects
 
 There are two ways to retrieve objects. One is using Query objects directly and
 another is using Parse::Object as a facade of a query object.
@@ -103,7 +105,7 @@ results = GameScore.find :where => {:objectId => 'Ed1nuqPvcm'}, :include => 'gam
 
 To know more about retrieving objects, see spec/parse_query_spec.rb
 
-### Updating Objects
+#### Updating Objects
 
 To update attributes, just update the attribute and save.
 
@@ -120,7 +122,7 @@ the Parse::Client object for it.
 Parse::Client.default.update :GaemScore, 'Ed1nuqPvcm', :score => 73453
 ```
 
-#### Counters
+##### Counters
 
 ```ruby
 game_score = GameScore.find_by_id 'Ed1nuqPvcm'
@@ -128,7 +130,7 @@ game_score.score = Parse::Op::Increment.new 1
 game_score.save
 ```
 
-#### Arrays
+##### Arrays
 
 ```ruby
 game_score = GameScore.find_by_id 'Ed1nuqPvcm'
@@ -136,7 +138,7 @@ game_score.skils = Parse::Op::AddUnique.new 'flying', 'kungfu'
 game_score.save
 ```
 
-#### Relations
+##### Relations
 
 ```ruby
 game_score = GameScore.find_by_id 'Ed1nuqPvcm'
@@ -150,7 +152,7 @@ game_score.opponents = Parse::Op::RemoveRelation.new player.pointer
 game_score.save
 ```
 
-### Deleting Objects
+#### Deleting Objects
 
 ```ruby
 game_score = GameScore.find_by_id 'Ed1nuqPvcm'
@@ -163,7 +165,7 @@ game_score.opponents = Parse::Op::Delete.new
 game_score.save
 ```
 
-### Batch Operations
+#### Batch Operations
 
 ```ruby
 seans_score = GameScore.new 'score' => 1337, 'playerName' => 'Sean Plott'
@@ -176,13 +178,15 @@ end
 result = batch.run
 ```
 
-### Basic Queries
+### Queries
+
+#### Basic Queries
 
 ```ruby
 game_scores = GameScore.find :all
 ```
 
-### Query Constraints
+#### Query Constraints
 
 ```ruby
 game_scores = GameScore.find :where => {"playerName" => "Sean Plott", "cheatMode" => false}
@@ -248,7 +252,7 @@ game_scores = GameScore.find :limit => 200, :skip => 400
 game_scores = GameScore.find :keys => ['score', 'playerName']
 ```
 
-### Queries on Array Values
+#### Queries on Array Values
 
 ```ruby
 game_scores = GameScore.find :where => proc {
@@ -262,7 +266,7 @@ game_scores = GameScore.find :where => proc {
 }
 ```
 
-### Relational Queries
+#### Relational Queries
 
 ```ruby
 game_scores = GameScore.find :where => proc {
@@ -288,11 +292,11 @@ game_scores = GameScore.find :where => proc {
 }
 ```
 
-### Counting Objects
+#### Counting Objects
 
 TBD
 
-### Compound Queries
+#### Compound Queries
 
 ```ruby
 game_scores = GameScore.find :where => proc {
@@ -300,16 +304,24 @@ game_scores = GameScore.find :where => proc {
 }
 ```
 
-### Sign up
+### Users
+
+#### Sign up
 
 ```ruby
 user = Parse::User.sign_up 'YOUR USERNAME', 'YOUR PASSWORD'
 ```
 
-### Log in
+#### Log in
 
 ```ruby
 user = Parse::User.log_in 'YOUR USERNAME', 'YOUR PASSWORD'
+```
+
+#### Requesting A Password Reset
+
+```ruby
+Parse::User.request_password_reset 'your@email.address'
 ```
 
 ### Security

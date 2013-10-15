@@ -14,6 +14,10 @@ module Parse
       def log_in username, password
         self.new(username, password).log_in
       end
+
+      def request_password_reset email
+        Parse::Client.default.call_api :post, 'requestPasswordReset', "email" => email
+      end
     end
 
     def initialize username=nil, password=nil, hash={}
