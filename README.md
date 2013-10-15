@@ -2,6 +2,34 @@
 
 Yet-Another Parse.com Library written in Pure Ruby
 
+**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
+
+- [Parsecom](#parsecom)
+  - [Usage](#usage)
+    - [Preparing](#preparing)
+    - [Declaring Parse Classes](#declaring-parse-classes)
+    - [Objects](#objects)
+      - [Creating Objects](#creating-objects)
+      - [Retrieving Objects](#retrieving-objects)
+      - [Updating Objects](#updating-objects)
+        - [Counters](#counters)
+        - [Arrays](#arrays)
+        - [Relations](#relations)
+      - [Deleting Objects](#deleting-objects)
+      - [Batch Operations](#batch-operations)
+    - [Queries](#queries)
+      - [Basic Queries](#basic-queries)
+      - [Query Constraints](#query-constraints)
+      - [Queries on Array Values](#queries-on-array-values)
+      - [Relational Queries](#relational-queries)
+      - [Counting Objects](#counting-objects)
+      - [Compound Queries](#compound-queries)
+    - [Users](#users)
+      - [Sign up](#sign-up)
+      - [Log in](#log-in)
+      - [Requesting A Password Reset](#requesting-a-password-reset)
+    - [Security](#security)
+
 ## Usage
 
 ### Preparing
