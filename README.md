@@ -65,7 +65,7 @@ It may be suitable for writing code in declarative style.
 
 ### Creating Objects
 
-To create new parse object, juse new and save the object.
+To create new parse object, just new and save the object.
 
 ```ruby
 game_score = GameScore.new
@@ -95,25 +95,10 @@ results = GameScore.find :where => {:objectId => 'Ed1nuqPvcm'}
 result = GameScore.find_by_id 'Ed1nuqPvcm'
 ```
 
-More complex query
+To fetch a child object, you can use the :include parameter.
 
 ```ruby
-# useing Query object directly
-results = Parse::Query.new(GameScore).
-  limit(10).
-  order(score).
-  where do
-    column(:score).gte(1000).lte(3000)
-    column(:cheatMode).eq(false)
-  end.
-  invoke
-
-# using Query object through Parse::Object
-results = GameScore.find :limit => 10, :order => 'score', 
-  :where => proc{
-    column(:score).gte(1000).lte(3000)
-    column(:cheatMode).eq(false)
-  }
+results = GameScore.find :where => {:objectId => 'Ed1nuqPvcm'}, :include => 'game'
 ```
 
 To know more about retrieving objects, see spec/parse_query_spec.rb
@@ -189,6 +174,130 @@ batch.add_request do
   zerocools_score.save
 end
 result = batch.run
+```
+
+### Basic Queries
+
+```ruby
+game_scores = GameScore.find :all
+```
+
+### Query Constraints
+
+```ruby
+game_scores = GameScore.find :where => {"playerName" => "Sean Plott", "cheatMode" => false}
+```
+
+```ruby
+game_scores = GameScore.find :where => proc {
+  column(:score).gte(1000).lte(3000)
+}
+```
+
+```ruby
+game_scores = GameScore.find :where => proc {
+  column(:score).in(1, 3, 5, 7, 9)
+}
+```
+
+```ruby
+game_scores = GameScore.find :where => proc {
+  column(:playerName).nin("Jonathan Walsh", "Dario Wunsch", "Shawn Simon")
+}
+```
+
+```ruby
+game_scores = GameScore.find :where => proc {
+  column(:score).exists
+}
+```
+
+```ruby
+game_scores = GameScore.find :where => proc {
+  column(:score).exists(false)
+}
+```
+
+```ruby
+game_scores = GameScore.find :where => proc {
+  subquery = subquery_for :Team
+  subquery.where {column(:winPct).gt(0.5)}
+  subquery.key = 'city'
+  column(:hometown).select(subquery)
+}
+```
+
+```ruby
+game_scores = GameScore.find :order => 'score'
+```
+
+```ruby
+game_scores = GameScore.find :order => '-score'
+game_scores = GameScore.find :order_desc => 'score'
+```
+
+```ruby
+game_scores = GameScore.find :order => ['score', '-name']
+```
+
+```ruby
+game_scores = GameScore.find :limit => 200, :skip => 400
+```
+
+```ruby
+game_scores = GameScore.find :keys => ['score', 'playerName']
+```
+
+### Queries on Array Values
+
+```ruby
+game_scores = GameScore.find :where => proc {
+  column(:arrayKey).contains(2)
+}
+```
+
+```ruby
+game_scores = GameScore.find :where => proc {
+  column(:arrayKey).all(2, 3, 4)
+}
+```
+
+### Relational Queries
+
+```ruby
+game_scores = GameScore.find :where => proc {
+  post = Parse::Object(:Post).new :objectId => '8TOXdXf3tz'
+  column(:post).eq(post)
+}
+```
+
+```ruby
+game_scores = GameScore.find :where => proc {
+  subquery = subquery_for :Post
+  subquery.where do
+    column(:image).exists(true)
+  end
+  column(:post).in_query(subquery)
+}
+```
+
+```ruby
+game_scores = GameScore.find :where => proc {
+  pointer = Parse::Pointer.new('className' => 'Post', 'objectId' => '8TOXdXf3tz')
+  related_to :likes, pointer
+}
+```
+
+### Counting Objects
+
+TBD
+
+### Compound Queries
+
+```ruby
+game_scores = GameScore.find :where => proc {
+  or_condition column(:wins).gt(150), column(:wins).lt(5)
+}
 ```
 
 ### Sign up
