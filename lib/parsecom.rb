@@ -25,6 +25,8 @@ require 'parse/op/remove'
 require 'parse/op/add_relation'
 require 'parse/op/remove_relation'
 require 'parse/op/delete'
+require 'parse/batch'
+require 'parse/batch_http_client'
 
 module Parse
   @@application_id = ENV['PARSE_APPLICATION_ID']

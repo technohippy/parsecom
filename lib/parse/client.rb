@@ -11,6 +11,10 @@ module Parse
       @@default_client ||= new
     end
 
+    def self.default= default_client
+      @@default_client = default_client
+    end
+
     def initialize application_id=nil, api_key=nil, master_key=nil, http_client=nil
       @application_id = application_id || Parse.application_id
       @api_key = api_key || Parse.api_key
@@ -126,22 +130,16 @@ module Parse
       query.invoke
     end
 
-    def create parse_class_name, values
-      call_api :post, "classes/#{parse_class_name}", values.to_json do |resp_body|
-        resp_body
-      end
+    def create parse_class_name, values, &block
+      call_api :post, "classes/#{parse_class_name}", values.to_json, &block
     end
 
-    def update parse_class_name, parse_object_id, values
-      call_api :put, "classes/#{parse_class_name}/#{parse_object_id}", values.to_json do |resp_body|
-        resp_body
-      end
+    def update parse_class_name, parse_object_id, values, &block
+      call_api :put, "classes/#{parse_class_name}/#{parse_object_id}", values.to_json, &block
     end
 
-    def delete parse_class_name, parse_object_id
-      call_api :delete, "classes/#{parse_class_name}/#{parse_object_id}" do |resp_body|
-        resp_body
-      end
+    def delete parse_class_name, parse_object_id, &block
+      call_api :delete, "classes/#{parse_class_name}/#{parse_object_id}", &block
     end
 
     def call_function name, param
@@ -168,8 +166,11 @@ module Parse
       return @use_master_key unless block
 
       tmp, @use_master_key = @use_master_key, true
-      ret = block.call
-      @use_master_key = tmp
+      begin
+        ret = block.call
+      ensure
+        @use_master_key = tmp
+      end
       ret
     end
 

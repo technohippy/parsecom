@@ -1,6 +1,8 @@
 # coding:utf-8
 module Parse
   class HttpClient
+    attr_accessor :host
+
     def initialize host
       @host = host
     end
@@ -15,7 +17,7 @@ module Parse
         resp = client.request req
         resp_body = JSON.parse resp.body
         raise StandardError.new "error calling #{endpoint}: #{
-          resp_body['error']}" if resp_body.has_key? 'error'
+          resp_body['error']}" if resp_body.is_a?(Hash) && resp_body.has_key?('error')
         block.call resp_body if block
       end
     end

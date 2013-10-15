@@ -1,0 +1,109 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.parse.com/1/classes/ClassA?limit=1
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      X-Parse-Application-Id:
+      - <X-Parse-Application-Id>
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      User-Agent:
+      - A parse.com client for ruby
+      X-Parse-Rest-Api-Key:
+      - <X-Parse-REST-API-Key>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Allow-Origin:
+      - ! '*'
+      Access-Control-Request-Method:
+      - ! '*'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Tue, 15 Oct 2013 12:50:22 GMT
+      Etag:
+      - ! '"e305fd3b81a57c52f61e6ae93b8eda1f"'
+      Server:
+      - nginx/1.4.2
+      Set-Cookie:
+      - <COOKIE-KEY>
+      Status:
+      - 200 OK
+      X-Runtime:
+      - '0.124765'
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      Content-Length:
+      - '252'
+      Connection:
+      - keep-alive
+    body:
+      encoding: US-ASCII
+      string: ! '{"results":[{"columnA":"Hello, parse.com","columnD":{"__type":"Relation","className":"ClassB"},"columnC":{"__type":"Relation","className":"ClassB"},"createdAt":"2013-10-04T04:25:12.585Z","updatedAt":"2013-10-04T04:25:12.585Z","objectId":"4Ks88ukAUE"}]}'
+    http_version: 
+  recorded_at: Tue, 15 Oct 2013 12:50:22 GMT
+- request:
+    method: post
+    uri: https://api.parse.com/1/batch
+    body:
+      encoding: US-ASCII
+      string: ! '{"requests":[{"method":"POST","path":"/1/classes/ClassA","body":{"columnA":"hello"}},{"method":"POST","path":"/1/classes/ClassA","body":{"columnA":"world"}},{"method":"PUT","path":"/1/classes/ClassA/4Ks88ukAUE","body":{"columnA":"updated!"}}]}'
+    headers:
+      X-Parse-Application-Id:
+      - <X-Parse-Application-Id>
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      User-Agent:
+      - A parse.com client for ruby
+      X-Parse-Rest-Api-Key:
+      - <X-Parse-REST-API-Key>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Allow-Origin:
+      - ! '*'
+      Access-Control-Request-Method:
+      - ! '*'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Tue, 15 Oct 2013 12:50:23 GMT
+      Etag:
+      - ! '"2d26115f97cbd8d4143d8fb6e9a0b296"'
+      Server:
+      - nginx/1.4.2
+      Set-Cookie:
+      - <COOKIE-KEY>
+      Status:
+      - 200 OK
+      X-Runtime:
+      - '0.154472'
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      Content-Length:
+      - '208'
+      Connection:
+      - keep-alive
+    body:
+      encoding: US-ASCII
+      string: ! '[{"success":{"createdAt":"2013-10-15T12:50:23.934Z","objectId":"za4TGQV39W"}},{"success":{"createdAt":"2013-10-15T12:50:23.951Z","objectId":"Y3ypX9OJ0v"}},{"success":{"updatedAt":"2013-10-15T12:50:23.977Z"}}]'
+    http_version: 
+  recorded_at: Tue, 15 Oct 2013 12:50:24 GMT
+recorded_with: VCR 2.4.0

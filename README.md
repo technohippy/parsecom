@@ -123,9 +123,9 @@ To know more about retrieving objects, see spec/parse_query_spec.rb
 To update attributes, just update the attribute and save.
 
 ```ruby
-result = GameScore.find_by_id 'Ed1nuqPvcm'
-result.score = 73453
-result.save
+game_score = GameScore.find_by_id 'Ed1nuqPvcm'
+game_score.score = 73453
+game_score.save
 ```
 
 If you want to update attributes without retrieving the object, you can use
@@ -138,44 +138,57 @@ Parse::Client.default.update :GaemScore, 'Ed1nuqPvcm', :score => 73453
 #### Counters
 
 ```ruby
-result = GameScore.find_by_id 'Ed1nuqPvcm'
-result.score = Parse::Op::Increment.new 1
-result.save
+game_score = GameScore.find_by_id 'Ed1nuqPvcm'
+game_score.score = Parse::Op::Increment.new 1
+game_score.save
 ```
 
 #### Arrays
 
 ```ruby
-result = GameScore.find_by_id 'Ed1nuqPvcm'
-result.skils = Parse::Op::AddUnique.new 'flying', 'kungfu'
-result.save
+game_score = GameScore.find_by_id 'Ed1nuqPvcm'
+game_score.skils = Parse::Op::AddUnique.new 'flying', 'kungfu'
+game_score.save
 ```
 
 #### Relations
 
 ```ruby
-result = GameScore.find_by_id 'Ed1nuqPvcm'
-result.opponents = Parse::Op::AddRelation.new player.pointer
-result.save
+game_score = GameScore.find_by_id 'Ed1nuqPvcm'
+game_score.opponents = Parse::Op::AddRelation.new player.pointer
+game_score.save
 ```
 
 ```ruby
-result = GameScore.find_by_id 'Ed1nuqPvcm'
-result.opponents = Parse::Op::RemoveRelation.new player.pointer
-result.save
+game_score = GameScore.find_by_id 'Ed1nuqPvcm'
+game_score.opponents = Parse::Op::RemoveRelation.new player.pointer
+game_score.save
 ```
 
 ### Deleting Objects
 
 ```ruby
-result = GameScore.find_by_id 'Ed1nuqPvcm'
-result.delete
+game_score = GameScore.find_by_id 'Ed1nuqPvcm'
+game_score.delete
 ```
 
 ```ruby
-result = GameScore.find_by_id 'Ed1nuqPvcm'
-result.opponents = Parse::Op::Delete.new
-result.save
+game_score = GameScore.find_by_id 'Ed1nuqPvcm'
+game_score.opponents = Parse::Op::Delete.new
+game_score.save
+```
+
+### Batch Operations
+
+```ruby
+seans_score = GameScore.new 'score' => 1337, 'playerName' => 'Sean Plott'
+zerocools_score = GameScore.new 'score' => 1338, 'playerName' => 'ZeroCool'
+batch = Parse::Batch.new
+batch.add_request do
+  seans_score.save
+  zerocools_score.save
+end
+result = batch.run
 ```
 
 ### Sign up
