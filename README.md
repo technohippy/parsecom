@@ -28,6 +28,11 @@ Yet-Another Parse.com Library written in Pure Ruby
       - [Sign up](#sign-up)
       - [Log in](#log-in)
       - [Requesting A Password Reset](#requesting-a-password-reset)
+      - [Retrieving Users](#retrieving-users)
+      - [Updating Users](#updating-users)
+      - [Querying](#querying)
+      - [Deleting Users](#deleting-users)
+      - [Linking Users](#linking-users)
     - [Security](#security)
 
 ## Usage
