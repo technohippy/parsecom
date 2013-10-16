@@ -28,8 +28,20 @@ module Parse
       @http_client = http_client || Parse::HttpClient.new(API_SERVER)
     end
 
+    def canonical_endpoint endpoint
+      case endpoint
+      when %r|/#{API_VERSION}/classes/_User|
+        endpoint.sub %r|/#{API_VERSION}/classes/_User|, "/#{API_VERSION}/users"
+      when %r|/#{API_VERSION}/classes/_Role|
+        endpoint.sub %r|/#{API_VERSION}/classes/_Role|, "/#{API_VERSION}/roles"
+      else
+        endpoint
+      end
+    end
+
     def call_api method, endpoint, body=nil, opt_headers={}, &block
       endpoint = "/#{API_VERSION}/#{endpoint}" unless endpoint[0] == '/'
+      endpoint = canonical_endpoint endpoint
       headers = build_headers opt_headers
       if body.is_a?(Hash)
         body = Hash[*(body.to_a.map{|k, v| [k, URI.encode(v)]}.flatten)].to_json 

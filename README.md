@@ -352,6 +352,37 @@ user = Parse::User.log_in 'YOUR USERNAME', 'YOUR PASSWORD'
 Parse::User.request_password_reset 'your@email.address'
 ```
 
+#### Retrieving Users
+
+```ruby
+user = Parse::User.find_by_id :g7y9tkhB7O
+```
+
+#### Updating Users
+
+```ruby
+user = Parse::User.find_by_id :g7y9tkhB7O
+user.phone = '415-369-6201'
+user.save
+```
+
+#### Querying
+
+```ruby
+users = Parse::User.find :all
+```
+
+#### Deleting Users
+
+```ruby
+user = Parse::User.find_by_id :g7y9tkhB7O
+user.delete
+```
+
+#### Linking Users
+
+TBD
+
 ### Security
 
 If you add an exclamation mark, "!" after the method name, the method is executed by using the master key.
