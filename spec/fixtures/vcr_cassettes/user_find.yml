@@ -59,7 +59,7 @@ http_interactions:
   recorded_at: Tue, 08 Oct 2013 13:18:37 GMT
 - request:
     method: get
-    uri: https://api.parse.com/1/classes/_User/5VuUwoEe0j
+    uri: https://api.parse.com/1/users/5VuUwoEe0j
     body:
       encoding: US-ASCII
       string: ''
