@@ -33,6 +33,8 @@ Yet-Another Parse.com Library written in Pure Ruby
       - [Querying](#querying)
       - [Deleting Users](#deleting-users)
       - [Linking Users](#linking-users)
+    - [Roles](#roles)
+      - [Creating Roles](#creating-roles)
     - [Security](#security)
 
 ## Usage
