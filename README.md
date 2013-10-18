@@ -406,6 +406,43 @@ moderator.users.add Parse::User.new('objectId' => '8TOXdXf3tz')
 moderator.save
 ```
 
+#### Retrieving Roles
+
+```ruby
+role = Parse::Role.find_by_id 'mrmBZvsErB'
+role.name # => 'Moderators'
+role.ACL.readable? '*' # => true
+role.ACL.writable? 'role:Administrators' # => true
+```
+
+#### Updating Roles
+
+```ruby
+user1 = Parse::User.new 'objectId' => '8TOXdXf3tz'
+user2 = Parse::User.new 'objectId' => 'g7y9tkhB7O'
+role = Parse::Role.find_by_id 'mrmBZvsErB'
+role.users = Parse::Op::AddRelation.new user1.pointer, user2.pointer
+role.save
+```
+
+```ruby
+removed_role = Parse::Role.new 'objectId' => 'Ed1nuqPvc'
+role = Parse::Role.find_by_id 'mrmBZvsErB'
+role.roles = Parse::Op::RemoveRelation.new removed_role
+role.save
+```
+
+#### Deleting Roles
+
+```ruby
+role = Parse::Role.find_by_id 'mrmBZvsErB'
+role.delete
+```
+
+### Files
+
+TBD
+
 ### Security
 
 If you add an exclamation mark, "!" after the method name, the method is executed by using the master key.

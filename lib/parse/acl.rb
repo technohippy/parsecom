@@ -16,8 +16,16 @@ module Parse
       (@acl[user] ||= {})['read'] = true
     end
 
+    def readable? user
+      !!(@acl[user] ||= {})['read']
+    end
+
     def writable user
       (@acl[user] ||= {})['write'] = true
+    end
+
+    def writable? user
+      !!(@acl[user] ||= {})['write']
     end
 
     def to_json *args

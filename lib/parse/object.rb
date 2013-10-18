@@ -87,6 +87,8 @@ module Parse
         if v.is_a? Hash
           body_hash[k] = 
             case v['__type']
+            when nil
+              Parse::ACL.new v
             when 'Date'
               Date.parse v['iso']
             when 'File'
