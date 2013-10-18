@@ -395,14 +395,12 @@ TBD
 #### Creating Roles
 
 ```ruby
-acl = Parse::ACL.new '*' => {'read' => true}
-moderator = Parse::Role.new 'Moderators', acl
+moderator = Parse::Role.new 'name' => 'Moderators', 'ACL' => Parse::ACL::PUBLIC_READ_ONLY
 moderator.save
 ```
 
 ```ruby
-acl = Parse::ACL.new '*' => {'read' => true}
-moderator = Parse::Role.new 'name' => 'Moderators', 'ACL' => acl
+moderator = Parse::Role.new 'name' => 'Moderators', 'ACL' => Parse::ACL::PUBLIC_READ_ONLY
 moderator.roles.add Parse::Role.new('objectId' => 'Ed1nuqPvc')
 moderator.users.add Parse::User.new('objectId' => '8TOXdXf3tz')
 moderator.save
