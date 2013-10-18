@@ -35,6 +35,10 @@ Yet-Another Parse.com Library written in Pure Ruby
       - [Linking Users](#linking-users)
     - [Roles](#roles)
       - [Creating Roles](#creating-roles)
+      - [Retrieving Roles](#retrieving-roles)
+      - [Updating Roles](#updating-roles)
+      - [Deleting Roles](#deleting-roles)
+    - [Files](#files)
     - [Security](#security)
 
 ## Usage
@@ -428,7 +432,7 @@ role.save
 ```ruby
 removed_role = Parse::Role.new 'objectId' => 'Ed1nuqPvc'
 role = Parse::Role.find_by_id 'mrmBZvsErB'
-role.roles = Parse::Op::RemoveRelation.new removed_role
+role.roles = Parse::Op::RemoveRelation.new removed_role.pointer
 role.save
 ```
 
