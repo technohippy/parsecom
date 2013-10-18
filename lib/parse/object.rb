@@ -145,6 +145,9 @@ module Parse
       check_deleted!
       hash = string_keyed_hash hash
       @updated_hash.update hash
+      @updated_hash.reject! do |k, v|
+        v.is_a?(Parse::Relation) && !v.changed?
+      end
       method = use_master_key ? :create! : :create
       parse_client.send(method, self.parse_class_name, @updated_hash) do |response|
         @parse_object_id = response['objectId']

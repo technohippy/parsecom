@@ -388,6 +388,24 @@ user.delete
 
 TBD
 
+### Roles
+
+#### Creating Roles
+
+```ruby
+acl = Parse::ACL.new '*' => {'read' => true}
+moderator = Parse::Role.new 'Moderators', acl
+moderator.save
+```
+
+```ruby
+acl = Parse::ACL.new '*' => {'read' => true}
+moderator = Parse::Role.new 'name' => 'Moderators', 'ACL' => acl
+moderator.roles.add Parse::Role.new('objectId' => 'Ed1nuqPvc')
+moderator.users.add Parse::User.new('objectId' => '8TOXdXf3tz')
+moderator.save
+```
+
 ### Security
 
 If you add an exclamation mark, "!" after the method name, the method is executed by using the master key.

@@ -16,8 +16,16 @@ module Parse
       @object ||= pointed_parse_class.find_by_id @raw_hash['objectId']
     end
 
-    def to_json
-      %Q|{"__type":"Pointer","className":"#{@raw_hash['className']}","objectId":"#{@raw_hash['objectId']}"}|
+    def to_h
+      {
+        "__type" => "Pointer",
+        "className" => "#{@raw_hash['className']}",
+        "objectId" => "#{@raw_hash['objectId']}"
+      }
+    end
+
+    def to_json *args
+      to_h.to_json
     end
 
     private
