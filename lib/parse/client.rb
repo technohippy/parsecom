@@ -29,11 +29,8 @@ module Parse
     end
 
     def canonical_endpoint endpoint
-      case endpoint
-      when %r|/#{API_VERSION}/classes/_User|
-        endpoint.sub %r|/#{API_VERSION}/classes/_User|, "/#{API_VERSION}/users"
-      when %r|/#{API_VERSION}/classes/_Role|
-        endpoint.sub %r|/#{API_VERSION}/classes/_Role|, "/#{API_VERSION}/roles"
+      if endpoint =~ %r</#{API_VERSION}/classes/_(User|Role|Installation)>
+        endpoint.sub %r</#{API_VERSION}/classes/_(User|Role|Installation)>, "/#{API_VERSION}/#{$1.downcase}s"
       else
         endpoint
       end

@@ -7,6 +7,8 @@ module Parse
   }
 
   class Object
+    include Parse::Util
+
     @@parse_class_vs_class_table = {}
 
     class << self
@@ -240,14 +242,6 @@ module Parse
     end
 
     private
-
-    def string_keyed_hash hash
-      new_hash = {}
-      hash.each do |k, v|
-        new_hash[k.to_s] = v
-      end
-      new_hash
-    end
 
     def check_deleted!
       raise 'This object has already been deleted.' if deleted?

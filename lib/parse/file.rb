@@ -4,7 +4,8 @@ module Parse
     attr_accessor :name, :url, :content, :type
 
     def initialize hash
-      @name = hash['name'] || hash[:name]
+      hash = string_keyed_hash hash
+      @name = hash['name']
       raise 'name is mandatory' unless @name
       @url = hash['url']
       @content = hash['content']

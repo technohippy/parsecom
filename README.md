@@ -337,7 +337,7 @@ game_scores = GameScore.find :where => proc {
 
 #### Counting Objects
 
-##### TBD
+TBD
 
 #### Compound Queries
 
@@ -396,7 +396,7 @@ user.delete
 
 #### Linking Users
 
-##### TBD
+TBD
 
 ### Roles
 
@@ -479,15 +479,47 @@ file.delete!
 
 ### Analytics
 
-#### TBD
+TBD
 
 ### Push Notifications
 
-#### TBD
+TBD
 
 ### Installations
 
-#### TBD
+#### Uploading Installation Data
+
+```ruby
+installation = Parse::Installation.new :deviceType => 'ios', :deviceToken => '0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef', :channels => ['']
+installation.save
+```
+
+#### Retrieving Installations
+
+```ruby
+installation = Parse::Installation.find_by_id :mrmBZvsErB
+```
+
+#### Updating Installations
+
+```ruby
+installation = Parse::Installation.find_by_id :mrmBZvsErB
+installation.channels = ['', 'foo']
+installation.save
+```
+
+#### Querying Installations
+
+```ruby
+installations = Parse::Installation.find! :all
+```
+
+#### Deleting Installations
+
+```ruby
+installation = Parse::Installation.find_by_id :mrmBZvsErB
+installation.delete!
+```
 
 ### Cloud Functions
 
@@ -498,7 +530,7 @@ client.hello
 
 ### GeoPoints
 
-#### TBD
+TBD
 
 ### Security
 
