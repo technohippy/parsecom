@@ -62,7 +62,7 @@ module Parse
         headers['X-Parse-REST-API-Key'] = @api_key
       end
       headers['X-Parse-Session-Token'] = @session_token if @session_token
-      headers.update opt_headers
+      headers.update(opt_headers).delete_if {|k, v| v.nil?}
     end
 
     def sign_up username, password, opts={}, &block

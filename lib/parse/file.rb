@@ -1,17 +1,43 @@
 # encoding:utf-8
 module Parse
   class File
-    attr_accessor :name, :url
+    attr_accessor :name, :url, :content, :type
 
     def initialize hash
-      @raw_hash = hash
-      @name = hash['name']
+      @name = hash['name'] || hash[:name]
+      raise 'name is mandatory' unless @name
       @url = hash['url']
+      @content = hash['content']
+      @type = hash['type'] || {
+        '.txt' => 'text/plain',
+        '.html' => 'text/html',
+        '.jpg' => 'image/jpeg',
+        '.jpeg' => 'image/jpeg',
+        '.png' => 'image/png',
+        '.gif' => 'image/gif'
+      }[::File.extname(@name).downcase]
+      @client = hash['parce_client'] || Parse::Client.default
+    end
+
+    def save
+      raise "Files cannot be updated." if @url
+      @content = ::File.read @content if @type =~ %r|^image/|
+      @client.call_api :post, "files/#{@name}", @content, 'Content-Type' => @type, 'Accept' => nil do |resp_body|
+        @name = resp_body['name']
+        @url = resp_body['url']
+      end
+    end
+
+    def delete!
+      raise "File should be fetched" unless @url
+      @client.use_master_key do
+        @client.call_api :delete, "files/#{@name}", nil, 'Content-Type' => nil, 'Accept' => nil
+      end
     end
 
     def load &block
-      open @url do |data| @data = data.read end unless @data
-      block.call @data
+      open @url do |content| @content = content.read end unless @content
+      block.call @content
     end
 
     def store filepath=nil
@@ -19,18 +45,29 @@ module Parse
       raise 'filepath is mandatory' unless filepath
 
       FileUtils.mkdir_p ::File.dirname(filepath)
-      load do |data|
+      load do |content|
         open filepath, 'wb' do |file|
-          file.write data
+          file.write content
         end
       end
     end
 
     def inspect
-      data, @data = @data, '..snip..'
+      content, @content = @content, '..snip..'
       ret = super
-      @data = data
+      @content = content
       ret
+    end
+
+    def to_h
+      {
+        "__type" => "File",
+        "name" => @name
+      }
+    end
+
+    def to_json *args
+      to_h.to_json
     end
   end
 end

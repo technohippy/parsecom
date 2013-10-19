@@ -14,8 +14,9 @@ module Parse
       client.set_debug_output $stderr if $DEBUG
       client.use_ssl = true
       client.start do
+        # TODO
         resp = client.request req
-        resp_body = JSON.parse resp.body
+        resp_body = resp.body.empty? ? nil : JSON.parse(resp.body)
         raise StandardError.new "error calling #{endpoint}: #{
           resp_body['error']}" if resp_body.is_a?(Hash) && resp_body.has_key?('error')
         block.call resp_body if block
