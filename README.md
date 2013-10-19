@@ -42,6 +42,12 @@ Yet-Another Parse.com Library written in Pure Ruby
       - [Uploading Files](#uploading-files)
       - [Associating with Objects](#associating-with-objects)
       - [Deleting Files](#deleting-files)
+    - [Installations](#installations)
+      - [Uploading Installation Data](#uploading-installation-data)
+      - [Retrieving Installations](#retrieving-installations)
+      - [Updating Installations](#updating-installations)
+      - [Querying Installations](#querying-installations)
+      - [Deleting Installations](#deleting-installations)
     - [Cloud Functions](#cloud-functions)
     - [Security](#security)
 
