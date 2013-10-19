@@ -333,7 +333,7 @@ game_scores = GameScore.find :where => proc {
 
 #### Counting Objects
 
-TBD
+##### TBD
 
 #### Compound Queries
 
@@ -392,7 +392,7 @@ user.delete
 
 #### Linking Users
 
-TBD
+##### TBD
 
 ### Roles
 
@@ -475,15 +475,15 @@ file.delete!
 
 ### Analytics
 
-TBD
+#### TBD
 
 ### Push Notifications
 
-TBD
+#### TBD
 
 ### Installations
 
-TBD
+#### TBD
 
 ### Cloud Functions
 
@@ -494,7 +494,7 @@ client.hello
 
 ### GeoPoints
 
-TBD
+#### TBD
 
 ### Security
 
