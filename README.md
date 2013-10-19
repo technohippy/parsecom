@@ -42,15 +42,7 @@ Yet-Another Parse.com Library written in Pure Ruby
       - [Uploading Files](#uploading-files)
       - [Associating with Objects](#associating-with-objects)
       - [Deleting Files](#deleting-files)
-    - [Analytics](#analytics)
-      - [TBD](#tbd-2)
-    - [Push Notifications](#push-notifications)
-      - [TBD](#tbd-3)
-    - [Installations](#installations)
-      - [TBD](#tbd-4)
     - [Cloud Functions](#cloud-functions)
-    - [GeoPoints](#geopoints)
-      - [TBD](#tbd-5)
     - [Security](#security)
 
 ## Usage
