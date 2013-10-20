@@ -536,7 +536,36 @@ client.hello
 
 ### GeoPoints
 
-TBD
+#### GeoPoint
+
+```ruby
+geo_point = Parse::GeoPoint.new :latitude => 40.0, :longitude => -30.0
+place = PlaceObject.new :location => geo_point
+```
+
+#### Geo Queries
+
+```ruby
+place = PlaceObject.find :limit => 10, :where => proc {
+  geo_point = Parse::GeoPoint.new :latitude => 30.0, :longitude => -20.0
+  column(:location).near_sphere geop_point
+}
+```
+
+```ruby
+places = PlaceObject.find :limit => 10, :where => proc {
+  geo_point = Parse::GeoPoint.new :latitude => 30.0, :longitude => -20.0
+  column(:location).near_sphere(geop_point).max_distance_in_miles(10.0)
+}
+```
+
+```ruby
+places = PizzaPlaceObject.find :limit => 10, :where => proc {
+  southwest = Parse::GeoPoint.new :latitude => 37.71, :longitude => -122.53
+  northeast = Parse::GeoPoint.new :latitude => 30.82, :longitude => -122.37
+  column(:location).within(southwest, northeast)
+}
+```
 
 ### Security
 

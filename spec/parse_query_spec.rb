@@ -132,6 +132,26 @@ describe Parse::Query, 'when it builds conditions' do
     end
     query.to_params.should have_params('where' => '{"$or":[{"wins":{"$gt":150}},{"wins":{"$lt":5}},{"loses":{"$lt":5}}]}')
     query.where.clear
+
+    geo_point1 = Parse::GeoPoint.new :latitude => 12, :longitude => 34
+    geo_point2 = Parse::GeoPoint.new :latitude => 56, :longitude => 78
+    query.where do
+      column(:location).near_sphere(geo_point1)
+    end
+    query.to_params.should have_params('where' => '{"location":{"$nearSphere":{"__type":"GeoPoint","latitude":12,"longitude":34}}}')
+    query.where.clear
+
+    query.where do
+      column(:location).near_sphere(geo_point1).max_distance_in_miles(10)
+    end
+    query.to_params.should have_params('where' => '{"location":{"$nearSphere":{"__type":"GeoPoint","latitude":12,"longitude":34},"$maxDistanceInMiles":10}}')
+    query.where.clear
+
+    query.where do
+      column(:location).within(geo_point1, geo_point2)
+    end
+    query.to_params.should have_params('where' => '{"location":{"$within":{"$box":[{"__type":"GeoPoint","latitude":12,"longitude":34},{"__type":"GeoPoint","latitude":56,"longitude":78}]}}}')
+    query.where.clear
   end
   
   it 'should build a correct "order" parameter' do

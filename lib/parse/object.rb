@@ -99,6 +99,8 @@ module Parse
               Parse::Pointer.new v, self
             when 'Relation'
               Parse::Relation.new self, k, v
+            when 'GeoPoint'
+              Parse::GeoPoint.new v
             else
               v
             end

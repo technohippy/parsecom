@@ -236,6 +236,33 @@ module Parse
         @query.where.push or_cond
       end
 
+      # conditions for GeoPoints
+
+      def near_sphere geo_point
+        @conditions.push ['$nearSphere', geo_point]
+        self
+      end
+
+      def max_distance_in_miles miles
+        @conditions.push ['$maxDistanceInMiles', miles]
+        self
+      end
+
+      def max_distance_in_kilometers kilometers
+        @conditions.push ['$maxDistanceInKilometers', kilometers]
+        self
+      end
+
+      def max_distance_in_radians radians
+        @conditions.push ['$maxDistanceInRadians', radians]
+        self
+      end
+
+      def within southwest_geo_point, northeast_geo_point
+        @conditions.push WithinCondition.new(southwest_geo_point, northeast_geo_point)
+        self
+      end
+
       def to_s
         if @conditions.size == 1 && !@conditions[0].is_a?(Array)
           "#{@column_name.to_s.inspect}:#{condition_to_s @conditions[0]}"
@@ -253,8 +280,11 @@ module Parse
         case val
         when Parse::Object
           %Q|{"__type":"Pointer","className":"#{val.parse_class_name}","objectId":"#{val.parse_object_id}"}|
+        when Parse::GeoPoint
+          val.to_json
         else
           val.inspect
+          #val.to_json
         end
       end
 
@@ -291,6 +321,17 @@ module Parse
 
       def to_s
         %Q|"$relatedTo":{"object":#{@pointer.to_json},"key":"#{@column_name}"}|
+      end
+    end
+
+    class WithinCondition
+      def initialize southwest_geo_point, northeast_geo_point
+        @southwest_geo_point = southwest_geo_point
+        @northeast_geo_point = northeast_geo_point 
+      end
+
+      def to_s
+        %Q|{"$within":{"$box":[#{@southwest_geo_point.to_json},#{@northeast_geo_point.to_json}]}}|
       end
     end
   end

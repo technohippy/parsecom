@@ -1,6 +1,8 @@
 # encoding:utf-8
 module Parse
   class File
+    include Util
+
     attr_accessor :name, :url, :content, :type
 
     def initialize hash
