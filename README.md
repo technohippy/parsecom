@@ -49,6 +49,9 @@ Yet-Another Parse.com Library written in Pure Ruby
       - [Querying Installations](#querying-installations)
       - [Deleting Installations](#deleting-installations)
     - [Cloud Functions](#cloud-functions)
+    - [GeoPoints](#geopoints)
+      - [GeoPoint](#geopoint)
+      - [Geo Queries](#geo-queries)
     - [Security](#security)
 
 ## Usage
