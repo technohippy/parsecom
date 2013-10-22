@@ -41,7 +41,7 @@ module Parse
       endpoint = canonical_endpoint endpoint
       headers = build_headers opt_headers
       if body.is_a?(Hash)
-        body = Hash[*(body.to_a.map{|k, v| [k, URI.encode(v)]}.flatten)].to_json 
+        body = Hash[*(body.to_a.map{|k, v| [k, URI.encode(v.to_s)]}.flatten)].to_json 
       end
       @http_client.request method, endpoint, headers, body, &block
     end

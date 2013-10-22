@@ -488,7 +488,30 @@ file.delete!
 
 ### Analytics
 
-TBD
+#### App-Open Analytics
+
+```ruby
+app_opened_event = Parse::Event::AppOpened.new :at => '2013-10-18T20:53:25Z'
+app_opened_event.fire
+```
+
+```ruby
+Parse::Event::AppOpened.fire :at => '2013-10-18T20:53:25Z'
+```
+
+#### Custom Analytics
+
+```ruby
+Parse::Event.create :Search
+search_event = Search.new :at => '2013-10-18T20:53:25Z', 
+  :priceRange => "1000-1500", :source => "craigslist", :dayType => "weekday"
+search_event.fire
+```
+
+```ruby
+error_event = Parse::Event::Error.new :at => '2013-10-18T20:53:25Z', :code => 404
+error_event.fire
+```
 
 ### Push Notifications
 
@@ -558,7 +581,7 @@ place = PlaceObject.find :limit => 10, :where => proc {
 ```ruby
 places = PlaceObject.find :limit => 10, :where => proc {
   geo_point = Parse::GeoPoint.new :latitude => 30.0, :longitude => -20.0
-  column(:location).near_sphere(geop_point).max_distance_in_miles(10.0)
+  column(:location).near_sphere(geo_point).max_distance_in_miles(10.0)
 }
 ```
 

@@ -21,6 +21,7 @@ require 'parse/geo_point'
 require 'parse/pointer'
 require 'parse/relation'
 require 'parse/file'
+require 'parse/date'
 require 'parse/op/increment'
 require 'parse/op/add'
 require 'parse/op/add_unique'
@@ -30,6 +31,9 @@ require 'parse/op/remove_relation'
 require 'parse/op/delete'
 require 'parse/batch'
 require 'parse/batch_http_client'
+require 'parse/event'
+require 'parse/event/app_opened'
+require 'parse/event/error'
 
 module Parse
   @@application_id = ENV['PARSE_APPLICATION_ID']
