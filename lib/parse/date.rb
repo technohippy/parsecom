@@ -1,9 +1,24 @@
+# encoding:utf-8
 module Parse
-  class Date < Time
+  class Date
+    include Util
+
+    class <<self
+      def parse str
+        new :iso => str
+      end
+    end
+
+    def initialize hash={}
+      hash = string_keyed_hash hash
+      @raw_hash = hash
+      @time = ::Time.parse hash['iso'] if hash.has_key? 'iso'
+    end
+
     def to_h
       {
         "__type" => "Date",
-        "iso" => strftime('%Y-%m-%dT%H:%M:%SZ')
+        "iso" => @time.strftime('%Y-%m-%dT%H:%M:%SZ')
       }
     end
 
@@ -13,6 +28,10 @@ module Parse
 
     def to_s
       to_json
+    end
+
+    def method_missing name, *args, &block
+      @time.__send__ name, *args, &block
     end
   end
 end
