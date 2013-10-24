@@ -1,6 +1,6 @@
 # encoding:utf-8
 module Parse
-  class File
+  class ParseFile
     include Util
 
     attr_accessor :name, :url, :content, :type
@@ -18,13 +18,13 @@ module Parse
         '.jpeg' => 'image/jpeg',
         '.png' => 'image/png',
         '.gif' => 'image/gif'
-      }[::File.extname(@name).downcase]
+      }[File.extname(@name).downcase]
       @client = hash['parce_client'] || Parse::Client.default
     end
 
     def save
       raise "Files cannot be updated." if @url
-      @content = ::File.read @content if @type =~ %r|^image/|
+      @content = File.read @content if @type =~ %r|^image/|
       @client.call_api :post, "files/#{@name}", @content, 'Content-Type' => @type, 'Accept' => nil do |resp_body|
         @name = resp_body['name']
         @url = resp_body['url']
@@ -40,14 +40,15 @@ module Parse
 
     def load &block
       open @url do |content| @content = content.read end unless @content
-      block.call @content
+      block.call @content if block
+      @content
     end
 
     def store filepath=nil
       filepath ||= @name
       raise 'filepath is mandatory' unless filepath
 
-      FileUtils.mkdir_p ::File.dirname(filepath)
+      FileUtils.mkdir_p File.dirname(filepath)
       load do |content|
         open filepath, 'wb' do |file|
           file.write content

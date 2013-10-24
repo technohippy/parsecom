@@ -48,7 +48,7 @@ module Parse
     def initialize hash={}
       hash = string_keyed_hash hash
       @at = hash.delete 'at'
-      @at = Parse::Date.parse @at if @at.is_a?(String)
+      @at = ParseDate.parse @at if @at.is_a?(String)
       @dimensions = hash.dup
     end
 

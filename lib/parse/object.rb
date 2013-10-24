@@ -92,9 +92,9 @@ module Parse
             when nil
               Parse::ACL.new v
             when 'Date'
-              Parse::Date.parse v['iso']
+              ParseDate.parse v['iso']
             when 'File'
-              Parse::File.new v
+              ParseFile.new v
             when 'Pointer'
               Parse::Pointer.new v, self
             when 'Relation'
@@ -150,14 +150,14 @@ module Parse
     def create hash, use_master_key=false
       check_deleted!
       hash = string_keyed_hash hash
-      @updated_hash.update hash
+      @updated_hash = @raw_hash.dup.update(@updated_hash).update hash
       @updated_hash.reject! do |k, v|
         v.is_a?(Parse::Relation) && !v.changed?
       end
       method = use_master_key ? :create! : :create
       parse_client.send(method, self.parse_class_name, @updated_hash) do |response|
         @parse_object_id = response['objectId']
-        @created_at = Parse::Date.parse response['createdAt']
+        @created_at = ParseDate.parse response['createdAt']
         @updated_at = @created_at
         @raw_hash.update @updated_hash
         @raw_hash.update response
@@ -165,7 +165,7 @@ module Parse
       end
     end
     
-    def create! hash
+    def create! hash={}
       create hash, true
     end
 
@@ -176,7 +176,7 @@ module Parse
       parse_client.send(method, parse_class_name, parse_object_id, hash) do |response|
         @raw_hash.update @updated_hash
         @raw_hash.update response
-        @updated_at = Parse::Date.parse response['updatedAt']
+        @updated_at = ParseDate.parse response['updatedAt']
         @updated_hash.clear
       end
     end

@@ -1,6 +1,6 @@
 # encoding:utf-8
 module Parse
-  class Date
+  class ParseDate
     include Util
 
     class <<self
