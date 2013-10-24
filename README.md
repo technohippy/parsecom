@@ -464,13 +464,13 @@ role.delete
 #### Uploading Files
 
 ```ruby
-file = Parse::File.new :name => 'hello.txt', :content => 'Hello, World!'
+file = Parse::ParseFile.new :name => 'hello.txt', :content => 'Hello, World!'
 file.save
 file.url # => "http://files.parse.com/7883...223/7480...b6d-hello.txt"
 ```
 
 ```ruby
-file = Parse::File.new :name => 'myPicture.jpg', :content => './myPicture.jpg'
+file = Parse::ParseFile.new :name => 'myPicture.jpg', :content => './myPicture.jpg'
 file.save
 file.url # => "http://files.parse.com/7883...223/81c7...bdf-myPicture.jpg"
 ```
@@ -478,7 +478,7 @@ file.url # => "http://files.parse.com/7883...223/81c7...bdf-myPicture.jpg"
 #### Associating with Objects 
 
 ```ruby
-file = Parse::File.new :name => 'profile.png', :content => './profile.png'
+file = Parse::ParseFile.new :name => 'profile.png', :content => './profile.png'
 profile = PlayerProfile.new 'name' => 'Andrew', 'picture' => file
 profile.save
 ```
