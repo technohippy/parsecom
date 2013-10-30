@@ -9,6 +9,12 @@ module Parse
       @blocks << block if block
     end
 
+    def run!
+      Parse::Client.default.use_master_key do
+        run
+      end
+    end
+
     def run
       default_client = Parse::Client.default
       default_http_client = default_client.http_client
@@ -33,5 +39,13 @@ module Parse
         end
       end
     end
+  end
+
+  def self.batch &block
+    Batch.new(&block).run
+  end
+
+  def self.batch! &block
+    Batch.new(&block).run!
   end
 end

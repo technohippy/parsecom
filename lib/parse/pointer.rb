@@ -1,10 +1,11 @@
 # coding:utf-8
 module Parse
   class Pointer
-    attr_reader :object
+    attr_reader :object, :parse_object_id
 
     def initialize hash, parent=nil
       @raw_hash = hash
+      @parse_object_id = hash['objectId']
       @parent_object = parent
 
       if @raw_hash.has_key? 'body'

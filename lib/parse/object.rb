@@ -14,6 +14,14 @@ module Parse
     class << self
       attr_accessor :parse_class_name, :parse_client, :auto_camel_case
 
+      def reserved_columns
+        %w(objectId)
+      end
+
+      def reserved_column? c
+        reserved_columns.include? c
+      end
+
       def register_parse_class parse_class
         @@parse_class_vs_class_table[parse_class.parse_class_name] = parse_class
       end

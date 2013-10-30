@@ -24,7 +24,9 @@ module Parse
 
     def save
       raise "Files cannot be updated." if @url
-      @content = File.read @content if @type =~ %r|^image/|
+      if @type =~ %r|^image/|
+        @content = @content.respond_to?(:read) ? @content.read : File.read(@content)
+      end
       @client.call_api :post, "files/#{@name}", @content, 'Content-Type' => @type, 'Accept' => nil do |resp_body|
         @name = resp_body['name']
         @url = resp_body['url']
