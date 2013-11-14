@@ -59,7 +59,7 @@ module Parse
 
       if hash.is_a? Hash
         hash.each do |k, v|
-          @where << %Q|"#{k}":"#{v}"|
+          @where << %Q|"#{k}":#{v.inspect}|
         end
       else
         block = hash if hash.is_a?(Proc) && block.nil?
