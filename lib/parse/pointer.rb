@@ -17,6 +17,11 @@ module Parse
       @object ||= pointed_parse_class.find_by_id @raw_hash['objectId']
     end
 
+    # TODO: should be refactored
+    def load!
+      @object ||= pointed_parse_class.find_by_id! @raw_hash['objectId']
+    end
+
     def to_h
       {
         "__type" => "Pointer",

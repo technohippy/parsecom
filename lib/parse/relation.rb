@@ -37,6 +37,19 @@ module Parse
       @objects
     end
 
+    # TODO should be refactored
+    def load! parse_client=Parse::Client.default
+      unless @objects
+        pointer = @parent_object.pointer
+        key = @column_name
+        related_class = Parse::Object @raw_hash['className']
+        @objects = related_class.find! :where => proc {
+          related_to key, pointer
+        }
+      end
+      @objects
+    end
+
     def changed?
       (@added_pointers.size + @removed_pointers.size) != 0
     end
@@ -61,7 +74,6 @@ module Parse
     end
 
     def to_json *args
-p to_h
       to_h.to_json
     end
   end
