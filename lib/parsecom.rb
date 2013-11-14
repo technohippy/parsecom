@@ -84,4 +84,8 @@ module Parse
   def auto_snake_case= auto_snake_case
     @@auto_snake_case = auto_snake_case
   end
+
+  def use_master_key!
+    Parse::Client.default.use_master_key!
+  end
 end
