@@ -5,7 +5,7 @@ module Parse
     API_VERSION = 1
     @@default_client = nil
 
-    attr_accessor :http_client, :session_token, :master_key
+    attr_accessor :http_client, :session_token, :application_id, :api_key, :master_key
 
     def self.default
       @@default_client ||= new
@@ -28,7 +28,7 @@ module Parse
       @http_client = http_client || Parse::HttpClient.new(API_SERVER)
     end
 
-    def canonical_endpoint endpoint
+    def canonicalize_endpoint endpoint
       if endpoint =~ %r</#{API_VERSION}/classes/_(User|Role|Installation)>
         endpoint.sub %r</#{API_VERSION}/classes/_(User|Role|Installation)>, "/#{API_VERSION}/#{$1.downcase}s"
       else
@@ -38,7 +38,7 @@ module Parse
 
     def call_api method, endpoint, body=nil, opt_headers={}, &block
       endpoint = "/#{API_VERSION}/#{endpoint}" unless endpoint[0] == '/'
-      endpoint = canonical_endpoint endpoint
+      endpoint = canonicalize_endpoint endpoint
       headers = build_headers opt_headers
       if body.is_a?(Hash)
         body = Hash[*(body.to_a.map{|k, v| [k, URI.encode(v.to_s)]}.flatten)].to_json 
