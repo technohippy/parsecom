@@ -237,8 +237,38 @@ module Parse
       Pointer.new 'className' => parse_class_name, 'objectId' => parse_object_id
     end
 
+    def to_h
+      {"__type" => self.class.name}.update(@raw_hash).update(@updated_hash)
+      ret = {}
+      {"__type" => self.class.name}.update(@raw_hash).update(@updated_hash).each do |k, v|
+        ret[k] = 
+          case v
+          when Parse::Pointer
+            v.to_h
+          when Parse::Object
+            v.to_h
+          when Parse::Relation
+            '<Ralations>'
+          else
+            v.to_s
+          end
+      end
+      ret
+=begin
+      Hash[
+        *({"__type" => self.class.name}.update(@raw_hash.dup).update(@updated_hash.dup).to_a.map do |a|
+          [a[0], a[1].to_h]
+        end.flatten(1))
+      ]
+=end
+    end
+
+    def to_json *args
+      to_h.to_json
+    end
+
     def to_s
-      "<#{parse_class_name}: #{{}.update(@raw_hash).update(@updated_hash).to_s}>"
+      to_h.to_s
     end
 
     def method_missing name, *args, &block
