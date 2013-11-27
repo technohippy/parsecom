@@ -159,7 +159,7 @@ module Parse
       def inspect
         # TODO should be refactored
         case @parent
-        when :select
+        when :select, :dont_select
           %Q|{"query":{"className":#{parse_class_name.to_s.inspect},"where":{#{@where.join ','}}},"key":#{@key.inspect}}|
         when :in_query, :not_in_query
           %Q|{"where":{#{@where.join ','}},"className":#{parse_class_name.to_s.inspect}}|
