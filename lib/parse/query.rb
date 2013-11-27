@@ -263,6 +263,16 @@ module Parse
         self
       end
 
+      def regex regex
+        @conditions.push ['$regex', regex.source]
+        self
+      end
+
+      # https://parse.com/questions/are-like-or-regex-queries-possible-via-the-rest-api
+      def starts_with str
+        regex %r|^\Q#{str}\E|
+      end
+
       def to_s
         if @conditions.size == 1 && !@conditions[0].is_a?(Array)
           "#{@column_name.to_s.inspect}:#{condition_to_s @conditions[0]}"
