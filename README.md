@@ -350,8 +350,7 @@ game_scores = GameScore.find :where => proc {
 #### Counting Objects
 
 ```ruby
-game_scores = GameScore.count 'playerName' => 'Jonathan Walsh'
-game_scores.query_count
+game_score_count = GameScore.count 'playerName' => 'Jonathan Walsh'
 ```
 
 #### Compound Queries
