@@ -1,17 +1,20 @@
 # coding:utf-8
 require "parse/version"
 
+require 'delegate'
 require 'open-uri'
 require 'fileutils'
 require 'json'
 require 'date'
 require 'net/https'
 require 'uri'
+require 'parse/ext/array'
 require 'parse/ext/string'
 require 'parse/util'
 require 'parse/http_client'
 require 'parse/client'
 require 'parse/query'
+require 'parse/query_result'
 require 'parse/acl'
 require 'parse/object'
 require 'parse/user'

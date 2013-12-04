@@ -18,7 +18,9 @@ module Parse
     def run &block
       block = proc do |body| 
         # TODO: should handle error
-        body['results']
+        results = body['results']
+        results.query_count = body['count']
+        results
       end unless block
       endpoint = %w(User).include?(@parse_class_name) \
         ? "#{@parse_class_name.lowercase}s" 
@@ -105,6 +107,7 @@ module Parse
       params.push "include=#{URI.encode include}" unless include.empty?
       params.push "skip=#{URI.encode @skip.to_s}" if @skip
       params.push "limit=#{URI.encode @limit.to_s}" if @limit
+      params.push "count=1" if @count
 
       params.join '&'
     end

@@ -49,8 +49,11 @@ module Parse
       end
 
       def find object_id_or_conditions, opts={}
-        results = [parse_client.find(self.parse_class_name, object_id_or_conditions, opts)].flatten
-        results.map! {|hash| self.new hash}
+        raw_results = parse_client.find(self.parse_class_name, object_id_or_conditions, opts)
+        results = [raw_results].flatten
+        results.map! {|hash| self.new hash} # TODO: should be recursive
+        results.query_count = raw_results.query_count
+        results
       end
 
       def find_by_id object_id, opts={}

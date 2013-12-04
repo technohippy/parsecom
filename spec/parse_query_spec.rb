@@ -70,6 +70,17 @@ describe Parse::Query, 'when it builds conditions' do
     query.where.clear
 
     query.where do
+      subquery = subquery_for :Team
+      subquery.where do
+        column(:winPct).gt(0.5)
+      end
+      subquery.key = 'city'
+      column(:hometown).dont_select(subquery)
+    end
+    query.to_params.should have_params('where' => '{"hometown":{"$dontSelect":{"query":{"className":"Team","where":{"winPct":{"$gt":0.5}}},"key":"city"}}}')
+    query.where.clear
+
+    query.where do
       column(:arrayKey).contains(2)
     end
     query.to_params.should have_params('where' => '{"arrayKey":2}')
