@@ -77,6 +77,16 @@ module Parse
       def find_all! opts={}
         find! :all, opts
       end
+
+      def count condition=nil, &block
+        opts = {:limit => 0, :count => true}
+        if condition
+          opts[:where] = condition
+        elsif block
+          opts[:where] = block
+        end
+        find(:all, opts).query_count
+      end
     end
 
     attr_accessor :parse_object_id, :created_at, :updated_at, :acl

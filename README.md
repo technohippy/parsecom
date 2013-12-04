@@ -350,7 +350,7 @@ game_scores = GameScore.find :where => proc {
 #### Counting Objects
 
 ```ruby
-game_scores = GameScore.find :where => {'playerName' => 'Jonathan Walsh'}, :count => true, :limit => 0
+game_scores = GameScore.count 'playerName' => 'Jonathan Walsh'
 game_scores.query_count
 ```
 
