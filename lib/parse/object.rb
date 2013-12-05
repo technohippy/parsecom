@@ -62,8 +62,11 @@ module Parse
 
       # TODO: need refactoring
       def find! object_id_or_conditions, opts={}
-        results = [parse_client.find!(self.parse_class_name, object_id_or_conditions, opts)].flatten
+        raw_results = parse_client.find!(self.parse_class_name, object_id_or_conditions, opts)
+        results = [raw_results].flatten
         results.map! {|hash| self.new hash}
+        results.query_count = raw_results.query_count
+        results
       end
 
       def find_by_id! object_id, opts={}
@@ -86,6 +89,16 @@ module Parse
           opts[:where] = block
         end
         find(:all, opts).query_count
+      end
+
+      def count! condition=nil, &block
+        opts = {:limit => 0, :count => true}
+        if condition
+          opts[:where] = condition
+        elsif block
+          opts[:where] = block
+        end
+        find!(:all, opts).query_count
       end
     end
 
