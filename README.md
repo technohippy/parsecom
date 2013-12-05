@@ -233,6 +233,17 @@ end
 result = batch.run
 ```
 
+Or
+
+```ruby
+seans_score = GameScore.new 'score' => 1337, 'playerName' => 'Sean Plott'
+zerocools_score = GameScore.new 'score' => 1338, 'playerName' => 'ZeroCool'
+Parse.batch do
+  seans_score.save
+  zerocools_score.save
+end
+```
+
 ### Queries
 
 #### Basic Queries
