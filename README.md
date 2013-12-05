@@ -606,3 +606,9 @@ If you add an exclamation mark, "!" after the method name, the method is execute
 class_a = ClassA.new :columnA => 'Hello, parse.com'
 class_a.save!
 ```
+
+If you want to use the master key for all API calls, set the use_master_key flag true so that you don't need to add "!" for all methods.
+
+```ruby
+Parse.use_master_key!
+```
