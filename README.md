@@ -56,6 +56,7 @@ Yet-Another Parse.com Library written in Pure Ruby
       - [GeoPoint](#geopoint)
       - [Geo Queries](#geo-queries)
     - [Security](#security)
+    - [Debug](#debug)
 
 ## Usage
 
