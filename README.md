@@ -266,6 +266,12 @@ game_scores = GameScore.find :where => proc {
 
 ```ruby
 game_scores = GameScore.find :where => proc {
+  column(:score).between(1000..3000)
+}
+```
+
+```ruby
+game_scores = GameScore.find :where => proc {
   column(:score).in(1, 3, 5, 7, 9)
 }
 ```
