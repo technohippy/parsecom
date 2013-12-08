@@ -19,7 +19,7 @@ module Parse
       block = proc do |body| 
         # TODO: should handle error
         results = body['results']
-        results.query_count = body['count']
+        results.query_count = body['count'] if results
         results
       end unless block
       endpoint = %w(User).include?(@parse_class_name) \

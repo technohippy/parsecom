@@ -1,3 +1,3 @@
 module Parse
-  VERSION = "0.5.10"
+  VERSION = "0.6.0"
 end

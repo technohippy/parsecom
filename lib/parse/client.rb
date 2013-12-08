@@ -193,6 +193,31 @@ module Parse
       EOS
     end
 
+    def dry_run?
+      @http_client.dry_run?
+    end
+
+    def dry_run!
+      @http_client.dry_run!
+    end
+
+    def dry_run= val
+      @http_client = val
+    end
+
+    def dry_run &block
+      return dry_run? unless block
+
+      tmp = dry_run?
+      dry_run!
+      begin
+        block.call
+      ensure
+        self.dry_run = tmp
+      end
+      nil
+    end
+
     def method_missing name, *args, &block
       call_function name, args.first
     end

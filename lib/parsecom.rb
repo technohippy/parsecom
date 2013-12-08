@@ -91,4 +91,8 @@ module Parse
   def use_master_key!
     Parse::Client.default.use_master_key!
   end
+
+  def dry_run!
+    Parse::Client.default.dry_run!
+  end
 end

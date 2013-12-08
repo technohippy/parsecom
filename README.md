@@ -629,3 +629,61 @@ If you want to use the master key for all API calls, set the use_master_key flag
 ```ruby
 Parse.use_master_key!
 ```
+
+### Debug
+
+To see debug output, set $DEBUG true.
+
+```ruby
+$DEBUG = true
+Post.find :all
+```
+
+You can see something like the following in $stderr.
+
+```
+opening connection to api.parse.com...
+opened
+<- "GET /1/classes/Post? HTTP/1.1\r\nX-Parse-Application-Id: abcdefghijklmnopqrstuvwxyz0123456789ABCD\r\nContent-Type: application/json\r\nAccept: application/json\r\nUser-Agent: A parse.com client for ruby\r\nX-Parse-Rest-Api-Key: abcdefghijklmnopqrstuvwxyz0123456789ABCD\r\nHost: api.parse.com\r\n\r\n"
+-> "HTTP/1.1 200 OK\r\n"
+-> "Access-Control-Allow-Origin: *\r\n"
+-> "Access-Control-Request-Method: *\r\n"
+-> "Cache-Control: max-age=0, private, must-revalidate\r\n"
+-> "Content-Type: application/json; charset=utf-8\r\n"
+-> "Date: Sun, 08 Dec 2013 08:14:40 GMT\r\n"
+-> "ETag: \"abcdefghijklmnopqrstuvwxyz012345\"\r\n"
+-> "Server: nginx/1.4.2\r\n"
+-> "Set-Cookie: _parse_session=abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789; domain=.parse.com; path=/; expires=Tue, 07-Jan-2014 08:14:40 GMT; secure; HttpOnly\r\n"
+-> "Status: 200 OK\r\n"
+-> "X-Runtime: 0.116322\r\n"
+-> "X-UA-Compatible: IE=Edge,chrome=1\r\n"
+-> "Content-Length: 603\r\n"
+-> "Connection: keep-alive\r\n"
+-> "\r\n"
+reading 603 bytes...
+-> "{\"results\":[{\"author\":{\"__type\":\"Pointer\",\"className\":\"_User\",\"objectId\":\"xWJVfYPbBP\"},\"body\":\"\xE6\x9C\xAC\xE6\x96\x87\",\"title\":\"\xE3\x82\xBF\xE3\x82\xA4\xE3\x83\x88
+\xE3\x83\xAB\",\"comments\":{\"__type\":\"Relation\",\"className\":\"Comment\"},\"createdAt\":\"2013-10-29T15:06:45.872Z\",\"updatedAt\":\"2013-10-29T15:09:01.111Z\",\"objectId\":\"6EyX2aypgD\"
+},{\"comments\":{\"__type\":\"Relation\",\"className\":\"Comment\"},\"createdAt\":\"2013-10-30T04:38:47.068Z\",\"updatedAt\":\"2013-10-30T04:38:47.068Z\",\"objectId\":\"njvHr4aelZ\"},{\"comment
+s\":{\"__type\":\"Relation\",\"className\":\"Comment\"},\"createdAt\":\"2013-10-30T04:40:37.397Z\",\"updatedAt\":\"2013-10-30T04:40:37.397Z\",\"objectId\":\"EDdGtur3vY\"}]}"
+read 603 bytes
+Conn keep-alive
+```
+
+Also you can do dry-run.
+
+```ruby
+Parse.dry_run!
+Post.find :all
+```
+
+This does not call any API and shows something like the following in $stderr.
+
+```
+get /1/classes/Post?
+X-Parse-Application-Id: abcdefghijklmnopqrstuvwxyz0123456789ABCD
+Content-Type: application/json
+Accept: application/json
+User-Agent: A parse.com client for ruby
+X-Parse-REST-API-Key: abcdefghijklmnopqrstuvwxyz0123456789ABCD
+
+```
