@@ -203,6 +203,14 @@ module Parse
       alias greater_that_or_equal_to gte
       alias not_equal_to ne
 
+      def between range
+        if range.exclude_end?
+          self.gt(range.begin).lt(range.end)
+        else
+          self.gte(range.begin).lte(range.end)
+        end
+      end
+
       def exists val=true
         @conditions.push ['$exists', val]
         self
@@ -212,6 +220,9 @@ module Parse
       %w(in nin all).each do |op|
         eval %Q{
           def #{op} *vals
+            if vals.size == 1 && vals.first.is_a?(Array)
+              vals = vals.first
+            end
             @conditions.push ['$#{op}', vals]
             self
           end

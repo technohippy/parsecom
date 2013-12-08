@@ -30,4 +30,8 @@ VCR.configure do |c|
   filter_sensitive_header(c, 'X-Parse-Session-Token')
 end
 
+ENV['PARSE_APPLICATION_ID'] ||= 'dummy_app_id'
+ENV['PARSE_API_KEY'] ||= 'dummy_api_key'
+ENV['PARSE_MASTER_KEY'] ||= 'dummy_master_key'
+
 require 'parsecom'

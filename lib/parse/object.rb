@@ -52,7 +52,9 @@ module Parse
         raw_results = parse_client.find(self.parse_class_name, object_id_or_conditions, opts)
         results = [raw_results].flatten
         results.map! {|hash| self.new hash} # TODO: should be recursive
-        results.query_count = raw_results.query_count
+        if raw_results.is_a? Array
+          results.query_count = raw_results.query_count
+        end
         results
       end
 
@@ -65,7 +67,9 @@ module Parse
         raw_results = parse_client.find!(self.parse_class_name, object_id_or_conditions, opts)
         results = [raw_results].flatten
         results.map! {|hash| self.new hash}
-        results.query_count = raw_results.query_count
+        if raw_results.is_a? Array
+          results.query_count = raw_results.query_count
+        end
         results
       end
 
