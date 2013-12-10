@@ -306,6 +306,8 @@ module Parse
           %Q|{"__type":"Pointer","className":"#{val.parse_class_name}","objectId":"#{val.parse_object_id}"}|
         when Parse::GeoPoint
           val.to_json
+        when Parse::ParseDate
+          val.to_json
         else
           val.inspect
           #val.to_json
