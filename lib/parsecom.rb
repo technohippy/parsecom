@@ -37,6 +37,7 @@ require 'parse/batch_http_client'
 require 'parse/event'
 require 'parse/event/app_opened'
 require 'parse/event/error'
+require 'parse/push'
 
 module Parse
   @@application_id = ENV['PARSE_APPLICATION_ID']

@@ -1,6 +1,6 @@
 module Parse
   class Query
-    attr_reader :keys
+    attr_reader :keys, :where
     attr_accessor :parse_class_name, :parse_client
 
     def initialize parse_class_name=nil, parse_client=nil
