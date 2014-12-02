@@ -203,7 +203,15 @@ module Parse
       alias greater_that_or_equal_to gte
       alias not_equal_to ne
 
-      def between range
+      def between *range
+        if range.size == 1 && range.first.is_a?(Range)
+          range = range.first
+        elsif range.size == 2
+          range = range[0]..range[1]
+        else
+          raise ArgumentErrr
+        end
+
         if range.exclude_end?
           self.gt(range.begin).lt(range.end)
         else
